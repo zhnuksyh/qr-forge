@@ -1,27 +1,51 @@
-# Static QR Forge
+# Static QR Forge 🛡️
 
-A pure client-side QR Code generator built with React, TypeScript, and Tailwind CSS.
+**"I was tired of every online QR generator verifying my credit card just to download a PNG. So I built my own."**
 
-## Getting Started
+Static QR Forge is a professional-grade, **Client-Side Only** QR Code generator. It runs entirely in your browser, meaning your data never leaves your device, and it will **never** ask you for a subscription.
 
-1.  **Install dependencies** (if you haven't already):
+[**🔗 Live Demo**](https://zhnuksyh.github.io/qr-forge/)
+
+## 🚀 Why this exists?
+Most "Free" QR generators are:
+1.  **Dynamic Traps**: They give you a short-link (e.g., `qr.co/xyz`) that redirects to your URL. When you stop paying, the link dies.
+2.  **Data Harvesters**: They track who scans your code.
+3.  **Paywalled**: They blur high-quality downloads unless you upgrade to "Pro".
+
+**Static QR Forge is different.** 
+It generates standard, static QR codes directly on your computer. The pixel pattern *is* the URL. It works offline, forever, and for free.
+
+## ✨ Features
+-   **100% Client-Side**: No server, no database, no tracking.
+-   **Vector Quality**: Export crystal-clear SVGs or high-res PNGs (2000px+).
+-   **Customizable**: Change colors, shapes, dot styles, and backgrounds.
+-   **Logo Support**: Embed your brand logo seamlessly.
+-   **Privacy Focused**: Secure by design.
+
+## 🛠️ Tech Stack
+-   **React + TypeScript**: For robust component logic.
+-   **Vite**: For lightning-fast development and building.
+-   **Tailwind CSS**: For the premium, dark-mode UI.
+-   **qr-code-styling**: The powerful engine behind the generation (loaded dynamically).
+
+## 🏃‍♂️ Running Locally
+
+1.  **Clone the repo**
     ```bash
-    npm install
+    git clone https://github.com/zhnuksyh/qr-forge.git
+    cd qr-forge
     ```
 
-2.  **Start the development server**:
+2.  **Install & Start**
     ```bash
+    npm install
     npm run dev
     ```
 
-3.  **Build for production**:
+3.  **Build**
     ```bash
     npm run build
     ```
 
-## Architecture
-
--   **Modular Design**: Components are split into `src/components`, logic into `src/hooks`.
--   **No Bundled QR Library**: Uses `qr-code-styling` via CDN injection (Runtime) to ensure performance and reduce bundle size.
--   **Persistence**: Saves history to `localStorage`.
--   **Styling**: Full Tailwind CSS integration with Dark Mode default.
+---
+*Built with frustration and code by zhnuksyh.*
