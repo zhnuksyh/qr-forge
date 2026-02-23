@@ -1,8 +1,8 @@
 import React from 'react';
-import { RefreshCw, Link as LinkIcon, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
+import { RefreshCw, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
+import { DataInput } from './DataInput';
 
 interface ControlsProps {
-  url: string;
   setUrl: (url: string) => void;
   color: string;
   setColor: (color: string) => void;
@@ -26,7 +26,7 @@ interface ControlsProps {
 }
 
 export const Controls: React.FC<ControlsProps> = ({ 
-  url, setUrl, 
+  setUrl, 
   color, setColor, 
   bgColor, setBgColor, 
   logo, setLogo, 
@@ -41,32 +41,8 @@ export const Controls: React.FC<ControlsProps> = ({
 }) => {
   return (
     <div className="lg:col-span-7 space-y-8">
-      {/* 1. URL Input Card */}
-      <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl shadow-black/20 relative overflow-hidden group">
-        {/* Decorative gradient glow */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
-        
-        <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-white relative z-10">
-          <div className="p-2 bg-slate-800 rounded-lg text-blue-400">
-            <LinkIcon className="w-5 h-5" />
-          </div>
-          Content Data
-        </h2>
-        
-        <div className="space-y-4 relative z-10">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Target Destination</label>
-          <div className="relative">
-            <input 
-              type="text" 
-              value={url} 
-              onChange={(e) => setUrl(e.target.value)}
-              className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all font-medium"
-              placeholder="https://yourwebsite.com"
-            />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none text-sm font-semibold">URL</div>
-          </div>
-        </div>
-      </div>
+      {/* 1. Data Input Card */}
+      <DataInput setQRData={setUrl} />
 
       {/* 2. Visual Design Card */}
       <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl shadow-black/20">

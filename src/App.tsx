@@ -42,7 +42,7 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6 py-12 flex-grow w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           <Controls 
-            url={url} setUrl={setUrl}
+            setUrl={setUrl}
             color={color} setColor={setColor}
             bgColor={bgColor} setBgColor={setBgColor}
             logo={logo} setLogo={setLogo}
