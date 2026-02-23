@@ -68,7 +68,7 @@ export const Controls: React.FC<ControlsProps> = ({
       <DataInput setQRData={setUrl} />
 
       {/* 2. Visual Design Card */}
-      <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
+      <div className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
         <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white">
           <div className="p-2 bg-purple-100 dark:bg-slate-800 rounded-lg text-purple-600 dark:text-purple-400">
             <RefreshCw className="w-5 h-5" />
@@ -207,7 +207,7 @@ export const Controls: React.FC<ControlsProps> = ({
       </div>
 
       {/* 3. Logo Upload Card */}
-      <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
+      <div className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
         <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white">
           <div className="p-2 bg-emerald-100 dark:bg-slate-800 rounded-lg text-emerald-600 dark:text-emerald-400">
             <ImageIcon className="w-5 h-5" />
@@ -258,7 +258,7 @@ export const Controls: React.FC<ControlsProps> = ({
 
       {/* 4. History Card */}
       {history.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
+        <div className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
           <div className="flex justify-between items-end mb-6">
             <h2 className="text-lg font-semibold text-slate-800 dark:text-white">Saved Sessions</h2>
             <button 

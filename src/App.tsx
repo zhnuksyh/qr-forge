@@ -57,8 +57,8 @@ export default function App() {
 
       <Header />
 
-      <main className="max-w-6xl mx-auto px-6 py-12 flex-grow w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <main className="max-w-6xl mx-auto px-4 lg:px-6 py-6 lg:py-12 flex-grow w-full">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12">
           <Controls 
             setUrl={setUrl}
             color={color} setColor={setColor}
