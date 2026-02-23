@@ -9,7 +9,7 @@ export const Header = () => {
             Q
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white leading-none">Static QR Forge</h1>
+            <h1 className="text-xl font-bold tracking-tight text-white leading-none">Qrypt</h1>
             <span className="text-[10px] text-slate-500 font-bold tracking-widest mt-0.5 block">SECURE & CLIENT-SIDE</span>
           </div>
         </div>

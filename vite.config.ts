@@ -10,8 +10,8 @@ export default defineConfig({
             registerType: 'autoUpdate',
             includeAssets: ['icon-192.svg'],
             manifest: {
-                name: 'Static QR Forge',
-                short_name: 'QR Forge',
+                name: 'Qrypt',
+                short_name: 'Qrypt',
                 description: 'Free, private, client-side QR code generator. No servers, no tracking.',
                 theme_color: '#020617',
                 background_color: '#020617',

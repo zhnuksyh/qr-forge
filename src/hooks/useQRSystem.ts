@@ -94,7 +94,7 @@ export const useQRSystem = () => {
 
             // 2. Download
             await qrCode.current.download({
-                name: 'qr-forge-export',
+                name: 'qrypt-export',
                 extension: ext
             });
 
