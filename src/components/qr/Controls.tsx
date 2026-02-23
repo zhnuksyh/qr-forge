@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefreshCw, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
 import { DataInput } from './DataInput';
 
@@ -39,6 +39,29 @@ export const Controls: React.FC<ControlsProps> = ({
   history,
   clearHistory
 }) => {
+  const [isDragging, setIsDragging] = useState(false);
+
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const onDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => setLogo(event.target?.result as string);
+        reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="lg:col-span-7 space-y-8">
       {/* 1. Data Input Card */}
@@ -193,13 +216,24 @@ export const Controls: React.FC<ControlsProps> = ({
         </h2>
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1">
-            <label className="block w-full h-32 border-2 border-dashed border-slate-700 rounded-2xl flex flex-col items-center justify-center cursor-pointer hover:bg-slate-800/50 hover:border-emerald-500/50 transition-all group">
+            <label 
+              onDragOver={onDragOver}
+              onDragLeave={onDragLeave}
+              onDrop={onDrop}
+              className={`block w-full h-32 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group ${
+                isDragging 
+                  ? 'border-emerald-400 bg-emerald-500/10' 
+                  : 'border-slate-700 hover:bg-slate-800/50 hover:border-emerald-500/50'
+              }`}
+            >
               <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
               <div className="flex flex-col items-center gap-3 text-slate-500 group-hover:text-emerald-400 transition-colors">
-                <div className="p-3 bg-slate-800 rounded-full group-hover:bg-slate-700 transition-colors">
+                <div className={`p-3 rounded-full transition-colors ${isDragging ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 group-hover:bg-slate-700'}`}>
                   <Upload className="w-6 h-6" />
                 </div>
-                <span className="text-sm font-medium">Click to upload brand asset</span>
+                <span className={`text-sm font-medium ${isDragging ? 'text-emerald-400' : ''}`}>
+                  {isDragging ? 'Drop logo here...' : 'Click or drop logo to upload'}
+                </span>
               </div>
             </label>
           </div>
