@@ -57,14 +57,14 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
             <button 
               onClick={saveToHistory}
               title="Save to History"
-              className="flex-1 group flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20"
+              className="flex-1 group flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <Save className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </button>
             <button 
               onClick={handleCopySvg}
               title="Copy SVG to Clipboard"
-              className="flex-1 group flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20"
+              className="flex-1 group flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
             </button>
@@ -72,7 +72,7 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
 
           <div className="relative group/download">
              <button 
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-900/20 transition-all active:scale-95"
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-900/20 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
             >
               <Download className="w-5 h-5" />
               <span>Download</span>
@@ -81,10 +81,10 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
             {/* Dropdown Menu */}
             <div className="absolute bottom-full right-0 w-full mb-2 hidden group-hover/download:flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-2 z-20">
               <div className="p-2 space-y-1">
-                <button onClick={() => handleDownload('png')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex justify-between items-center">
+                <button onClick={() => handleDownload('png')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:text-slate-900 dark:focus:text-white focus:outline-none transition-colors flex justify-between items-center">
                   PNG <span className="text-[10px] bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded text-slate-600 dark:text-slate-500">RASTER</span>
                 </button>
-                <button onClick={() => handleDownload('svg')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex justify-between items-center">
+                <button onClick={() => handleDownload('svg')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:text-slate-900 dark:focus:text-white focus:outline-none transition-colors flex justify-between items-center">
                   SVG <span className="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded">VECTOR</span>
                 </button>
               </div>

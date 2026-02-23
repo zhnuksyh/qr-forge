@@ -80,7 +80,7 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Dot Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Primary Color</label>
-            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-purple-500 transition-shadow">
               <input 
                 type="color" 
                 value={color} 
@@ -94,7 +94,7 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Background Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Background</label>
-            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-purple-500 transition-shadow">
               <input 
                 type="color" 
                 value={bgColor} 
@@ -226,7 +226,7 @@ export const Controls: React.FC<ControlsProps> = ({
                   : 'border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-emerald-400 dark:hover:border-emerald-500/50'
               }`}
             >
-              <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+              <input type="file" accept="image/*" onChange={handleLogoUpload} className="sr-only" />
               <div className="flex flex-col items-center gap-3 text-slate-500 dark:text-slate-500 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
                 <div className={`p-3 rounded-full transition-colors ${isDragging ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'}`}>
                   <Upload className="w-6 h-6" />
@@ -272,8 +272,11 @@ export const Controls: React.FC<ControlsProps> = ({
             {history.map((hUrl, i) => (
               <div 
                 key={i} 
+                role="button"
+                tabIndex={0}
                 onClick={() => setUrl(hUrl)}
-                className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/50 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-all group"
+                onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setUrl(hUrl)}
+                className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/50 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-all group focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <div className="flex items-center gap-3 overflow-hidden">
                   <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 transition-colors shrink-0"></div>

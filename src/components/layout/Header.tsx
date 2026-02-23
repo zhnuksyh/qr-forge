@@ -20,7 +20,7 @@ export const Header = () => {
         <div className="flex items-center gap-4">
           <button 
             onClick={toggleTheme}
-            className="p-2 rounded-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors"
+            className="p-2 rounded-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500"
             title="Toggle theme"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -30,7 +30,7 @@ export const Header = () => {
             href="https://github.com/zhnuksyh/qr-forge" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="hidden md:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-all uppercase tracking-wider bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 group"
+            className="hidden md:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-all uppercase tracking-wider bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>GitHub Pages v1.0</span>

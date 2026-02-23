@@ -99,7 +99,7 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
               <button
                 key={dt.id}
                 onClick={() => setDataType(dt.id)}
-                className={`flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl text-xs font-semibold transition-all border ${
+                className={`flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl text-xs font-semibold transition-all border focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                   dataType === dt.id
                     ? 'bg-blue-50 dark:bg-blue-600/20 border-blue-500 dark:border-blue-500/50 text-blue-600 dark:text-blue-400 shadow-lg shadow-blue-500/10 dark:shadow-blue-900/10'
                     : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
@@ -157,7 +157,7 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
                 <label className={labelClass}>Hidden Network</label>
                 <button 
                   onClick={() => setHidden(!hidden)}
-                  className={`w-full p-4 rounded-xl font-medium transition-all border ${
+                  className={`w-full p-4 rounded-xl font-medium transition-all border focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     hidden 
                       ? 'bg-blue-50 dark:bg-blue-600/20 border-blue-500 dark:border-blue-500/50 text-blue-600 dark:text-blue-400' 
                       : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-500'
