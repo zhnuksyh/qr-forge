@@ -16,6 +16,7 @@ export default function App() {
     errorCorrectionLevel, setErrorCorrectionLevel,
     cornerSquareType, setCornerSquareType,
     cornerDotType, setCornerDotType,
+    exportSize, setExportSize,
     isLibLoaded, 
     qrRef, 
     handleLogoUpload, 
@@ -49,6 +50,7 @@ export default function App() {
             errorCorrectionLevel={errorCorrectionLevel} setErrorCorrectionLevel={setErrorCorrectionLevel}
             cornerSquareType={cornerSquareType} setCornerSquareType={setCornerSquareType}
             cornerDotType={cornerDotType} setCornerDotType={setCornerDotType}
+            exportSize={exportSize} setExportSize={setExportSize}
             handleLogoUpload={handleLogoUpload}
             history={history}
             clearHistory={clearHistory}

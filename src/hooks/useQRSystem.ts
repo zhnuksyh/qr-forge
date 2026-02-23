@@ -11,6 +11,7 @@ export const useQRSystem = () => {
     const [errorCorrectionLevel, setErrorCorrectionLevel] = useState<string>('Q');
     const [cornerSquareType, setCornerSquareType] = useState<string>('extra-rounded');
     const [cornerDotType, setCornerDotType] = useState<string>('dot');
+    const [exportSize, setExportSize] = useState<number>(2000);
 
     // System State (Library Loading Status)
     const [isLibLoaded, setIsLibLoaded] = useState(false);
@@ -86,8 +87,8 @@ export const useQRSystem = () => {
         if (qrCode.current && url.trim()) {
             // 1. Re-configure for High-Res Export
             await qrCode.current.update({
-                width: 2000,
-                height: 2000,
+                width: exportSize,
+                height: exportSize,
                 imageOptions: { crossOrigin: 'anonymous', margin: 20 }
             });
 
@@ -115,6 +116,7 @@ export const useQRSystem = () => {
         errorCorrectionLevel, setErrorCorrectionLevel,
         cornerSquareType, setCornerSquareType,
         cornerDotType, setCornerDotType,
+        exportSize, setExportSize,
         isLibLoaded,
         qrRef: ref,
         handleLogoUpload,

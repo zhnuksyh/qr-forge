@@ -18,6 +18,8 @@ interface ControlsProps {
   setCornerSquareType: (type: string) => void;
   cornerDotType: string;
   setCornerDotType: (type: string) => void;
+  exportSize: number;
+  setExportSize: (size: number) => void;
   handleLogoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   history: string[];
   clearHistory: () => void;
@@ -32,6 +34,7 @@ export const Controls: React.FC<ControlsProps> = ({
   errorCorrectionLevel, setErrorCorrectionLevel,
   cornerSquareType, setCornerSquareType,
   cornerDotType, setCornerDotType,
+  exportSize, setExportSize,
   handleLogoUpload,
   history,
   clearHistory
@@ -178,6 +181,27 @@ export const Controls: React.FC<ControlsProps> = ({
               <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </div>
+            </div>
+          </div>
+
+          {/* Export Resolution Slider */}
+          <div className="md:col-span-2 space-y-3">
+            <div className="flex justify-between items-center">
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Export Resolution</label>
+              <span className="text-sm font-mono text-purple-400 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">{exportSize}px</span>
+            </div>
+            <input 
+              type="range"
+              min={256}
+              max={4096}
+              step={256}
+              value={exportSize}
+              onChange={(e) => setExportSize(Number(e.target.value))}
+              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+            />
+            <div className="flex justify-between text-[10px] text-slate-600 font-medium">
+              <span>256px</span>
+              <span>4096px</span>
             </div>
           </div>
         </div>
