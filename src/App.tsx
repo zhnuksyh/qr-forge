@@ -14,6 +14,8 @@ export default function App() {
     logo, setLogo, 
     dotType, setDotType, 
     errorCorrectionLevel, setErrorCorrectionLevel,
+    cornerSquareType, setCornerSquareType,
+    cornerDotType, setCornerDotType,
     isLibLoaded, 
     qrRef, 
     handleLogoUpload, 
@@ -45,6 +47,8 @@ export default function App() {
             logo={logo} setLogo={setLogo}
             dotType={dotType} setDotType={setDotType}
             errorCorrectionLevel={errorCorrectionLevel} setErrorCorrectionLevel={setErrorCorrectionLevel}
+            cornerSquareType={cornerSquareType} setCornerSquareType={setCornerSquareType}
+            cornerDotType={cornerDotType} setCornerDotType={setCornerDotType}
             handleLogoUpload={handleLogoUpload}
             history={history}
             clearHistory={clearHistory}

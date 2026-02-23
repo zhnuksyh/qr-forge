@@ -14,6 +14,10 @@ interface ControlsProps {
   setDotType: (type: string) => void;
   errorCorrectionLevel: string;
   setErrorCorrectionLevel: (level: string) => void;
+  cornerSquareType: string;
+  setCornerSquareType: (type: string) => void;
+  cornerDotType: string;
+  setCornerDotType: (type: string) => void;
   handleLogoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   history: string[];
   clearHistory: () => void;
@@ -26,6 +30,8 @@ export const Controls: React.FC<ControlsProps> = ({
   logo, setLogo, 
   dotType, setDotType, 
   errorCorrectionLevel, setErrorCorrectionLevel,
+  cornerSquareType, setCornerSquareType,
+  cornerDotType, setCornerDotType,
   handleLogoUpload,
   history,
   clearHistory
@@ -131,6 +137,43 @@ export const Controls: React.FC<ControlsProps> = ({
                 <option value="M">Medium (15%) - Balanced</option>
                 <option value="Q">Quartile (25%) - Recommended with logos</option>
                 <option value="H">High (30%) - Maximum recovery</option>
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Corner Square Style */}
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Corner Squares</label>
+            <div className="relative">
+              <select 
+                value={cornerSquareType}
+                onChange={(e) => setCornerSquareType(e.target.value)}
+                className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-900 transition-colors"
+              >
+                <option value="square">Square</option>
+                <option value="dot">Dot</option>
+                <option value="extra-rounded">Extra Rounded</option>
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Corner Dot Style */}
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Corner Dots</label>
+            <div className="relative">
+              <select 
+                value={cornerDotType}
+                onChange={(e) => setCornerDotType(e.target.value)}
+                className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-900 transition-colors"
+              >
+                <option value="square">Square</option>
+                <option value="dot">Dot</option>
               </select>
               <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>

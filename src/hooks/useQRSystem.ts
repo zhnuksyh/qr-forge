@@ -9,6 +9,8 @@ export const useQRSystem = () => {
     const [logo, setLogo] = useState<string | null>(null);
     const [dotType, setDotType] = useState<string>('rounded');
     const [errorCorrectionLevel, setErrorCorrectionLevel] = useState<string>('Q');
+    const [cornerSquareType, setCornerSquareType] = useState<string>('extra-rounded');
+    const [cornerDotType, setCornerDotType] = useState<string>('dot');
 
     // System State (Library Loading Status)
     const [isLibLoaded, setIsLibLoaded] = useState(false);
@@ -50,7 +52,8 @@ export const useQRSystem = () => {
             dotsOptions: { color: color, type: dotType },
             backgroundOptions: { color: bgColor },
             imageOptions: { crossOrigin: 'anonymous', margin: 5 },
-            cornersSquareOptions: { type: 'extra-rounded' },
+            cornersSquareOptions: { type: cornerSquareType },
+            cornersDotOptions: { type: cornerDotType },
             qrOptions: { errorCorrectionLevel: errorCorrectionLevel }
         };
 
@@ -65,7 +68,7 @@ export const useQRSystem = () => {
                 image: logo || undefined
             });
         }
-    }, [isLibLoaded, url, color, bgColor, logo, dotType, errorCorrectionLevel]);
+    }, [isLibLoaded, url, color, bgColor, logo, dotType, errorCorrectionLevel, cornerSquareType, cornerDotType]);
 
     // Handlers
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,6 +113,8 @@ export const useQRSystem = () => {
         logo, setLogo,
         dotType, setDotType,
         errorCorrectionLevel, setErrorCorrectionLevel,
+        cornerSquareType, setCornerSquareType,
+        cornerDotType, setCornerDotType,
         isLibLoaded,
         qrRef: ref,
         handleLogoUpload,
