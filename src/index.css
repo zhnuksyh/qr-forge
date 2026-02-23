@@ -25,6 +25,14 @@
     ::-webkit-scrollbar-thumb {
         @apply bg-slate-800 rounded-full hover:bg-slate-700 transition-colors;
     }
+
+    /* Smooth QR Code Rendering Transitions */
+    .qr-container svg rect,
+    .qr-container svg path,
+    .qr-container svg circle {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: center;
+    }
 }
 
 @keyframes toast-in {
