@@ -13,6 +13,7 @@ export default function App() {
     bgColor, setBgColor, 
     logo, setLogo, 
     dotType, setDotType, 
+    errorCorrectionLevel, setErrorCorrectionLevel,
     isLibLoaded, 
     qrRef, 
     handleLogoUpload, 
@@ -43,6 +44,7 @@ export default function App() {
             bgColor={bgColor} setBgColor={setBgColor}
             logo={logo} setLogo={setLogo}
             dotType={dotType} setDotType={setDotType}
+            errorCorrectionLevel={errorCorrectionLevel} setErrorCorrectionLevel={setErrorCorrectionLevel}
             handleLogoUpload={handleLogoUpload}
             history={history}
             clearHistory={clearHistory}

@@ -8,6 +8,7 @@ export const useQRSystem = () => {
     const [bgColor, setBgColor] = useState('#ffffff');
     const [logo, setLogo] = useState<string | null>(null);
     const [dotType, setDotType] = useState<string>('rounded');
+    const [errorCorrectionLevel, setErrorCorrectionLevel] = useState<string>('Q');
 
     // System State (Library Loading Status)
     const [isLibLoaded, setIsLibLoaded] = useState(false);
@@ -49,7 +50,8 @@ export const useQRSystem = () => {
             dotsOptions: { color: color, type: dotType },
             backgroundOptions: { color: bgColor },
             imageOptions: { crossOrigin: 'anonymous', margin: 5 },
-            cornersSquareOptions: { type: 'extra-rounded' }
+            cornersSquareOptions: { type: 'extra-rounded' },
+            qrOptions: { errorCorrectionLevel: errorCorrectionLevel }
         };
 
         if (!qrCode.current) {
@@ -63,7 +65,7 @@ export const useQRSystem = () => {
                 image: logo || undefined
             });
         }
-    }, [isLibLoaded, url, color, bgColor, logo, dotType]);
+    }, [isLibLoaded, url, color, bgColor, logo, dotType, errorCorrectionLevel]);
 
     // Handlers
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,6 +109,7 @@ export const useQRSystem = () => {
         bgColor, setBgColor,
         logo, setLogo,
         dotType, setDotType,
+        errorCorrectionLevel, setErrorCorrectionLevel,
         isLibLoaded,
         qrRef: ref,
         handleLogoUpload,
