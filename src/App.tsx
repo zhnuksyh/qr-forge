@@ -5,6 +5,7 @@ import { Controls } from './components/qr/Controls';
 import { PreviewCard } from './components/qr/PreviewCard';
 import { useQRSystem } from './hooks/useQRSystem';
 import { useHistory } from './hooks/useHistory';
+import { useToast } from './components/ui/Toast';
 
 export default function App() {
   const { 
@@ -24,9 +25,16 @@ export default function App() {
   } = useQRSystem();
 
   const { history, saveToHistory, clearHistory } = useHistory();
+  const { toast } = useToast();
 
   const onSave = () => {
     saveToHistory(url);
+    toast('QR code saved to history');
+  };
+
+  const onDownload = async (ext: 'png' | 'svg' | 'jpeg') => {
+    await handleDownload(ext);
+    toast(`Downloaded as ${ext.toUpperCase()}`);
   };
 
   return (
@@ -60,7 +68,7 @@ export default function App() {
             isLibLoaded={isLibLoaded}
             qrRef={qrRef}
             saveToHistory={onSave}
-            handleDownload={handleDownload}
+            handleDownload={onDownload}
           />
         </div>
       </main>
