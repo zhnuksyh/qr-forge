@@ -107,6 +107,22 @@ export const useQRSystem = () => {
         }
     };
 
+    const handleCopySvg = async (): Promise<boolean> => {
+        if (!qrCode.current || !url.trim()) return false;
+        try {
+            const rawData = await qrCode.current.getRawData('svg');
+            if (rawData) {
+                const svgText = await rawData.text();
+                await navigator.clipboard.writeText(svgText);
+                return true;
+            }
+            return false;
+        } catch (error) {
+            console.error("Failed to copy SVG", error);
+            return false;
+        }
+    };
+
     return {
         url, setUrl,
         color, setColor,
@@ -120,6 +136,7 @@ export const useQRSystem = () => {
         isLibLoaded,
         qrRef: ref,
         handleLogoUpload,
-        handleDownload
+        handleDownload,
+        handleCopySvg
     };
 };

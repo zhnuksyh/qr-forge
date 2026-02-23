@@ -21,7 +21,8 @@ export default function App() {
     isLibLoaded, 
     qrRef, 
     handleLogoUpload, 
-    handleDownload 
+    handleDownload,
+    handleCopySvg 
   } = useQRSystem();
 
   const { history, saveToHistory, clearHistory } = useHistory();
@@ -35,6 +36,15 @@ export default function App() {
   const onDownload = async (ext: 'png' | 'svg' | 'jpeg') => {
     await handleDownload(ext);
     toast(`Downloaded as ${ext.toUpperCase()}`);
+  };
+
+  const onCopySvg = async () => {
+    const success = await handleCopySvg();
+    if (success) {
+      toast('SVG copied to clipboard');
+    } else {
+      toast('Failed to copy SVG', 'error');
+    }
   };
 
   return (
@@ -69,6 +79,7 @@ export default function App() {
             qrRef={qrRef}
             saveToHistory={onSave}
             handleDownload={onDownload}
+            handleCopySvg={onCopySvg}
           />
         </div>
       </main>
