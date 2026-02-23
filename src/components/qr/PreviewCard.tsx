@@ -21,15 +21,15 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
       <div className="sticky top-28 space-y-6">
         
         {/* [Preview Card] - kept LIGHT/WHITE as requested for contrast */}
-        <div className="bg-white p-8 rounded-[2rem] shadow-2xl shadow-black/50 border border-slate-800 relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] shadow-2xl shadow-black/5 dark:shadow-black/50 border border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500"></div>
           
-          <h3 className="text-center text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-8">Live Preview</h3>
+          <h3 className="text-center text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-8">Live Preview</h3>
           
           <div className="flex flex-col items-center justify-center">
             <div 
               ref={qrRef} 
-              className="qr-container bg-white p-6 rounded-2xl shadow-inner border border-slate-100 flex justify-center items-center min-h-[300px]"
+              className="qr-container bg-white p-6 rounded-2xl shadow-inner border border-slate-200 dark:border-slate-100 flex justify-center items-center min-h-[300px]"
               // The library injects the canvas/svg here
             >
               {!isLibLoaded && (
@@ -41,10 +41,10 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
             </div>
             
             <div className="mt-8 space-y-2 text-center">
-              <p className="text-sm font-medium text-slate-500">
+              <p className="text-sm font-medium text-slate-600 dark:text-slate-500">
                  Generated securely in your browser
               </p>
-              <p className="text-xs text-slate-400 max-w-[240px] mx-auto leading-relaxed">
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-[240px] mx-auto leading-relaxed">
                 High-resolution vector-ready code
               </p>
             </div>
@@ -57,14 +57,14 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
             <button 
               onClick={saveToHistory}
               title="Save to History"
-              className="flex-1 group flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-700 hover:border-slate-600 hover:shadow-lg hover:shadow-black/20"
+              className="flex-1 group flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20"
             >
               <Save className="w-5 h-5 group-hover:scale-110 transition-transform" />
             </button>
             <button 
               onClick={handleCopySvg}
               title="Copy SVG to Clipboard"
-              className="flex-1 group flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-700 hover:border-slate-600 hover:shadow-lg hover:shadow-black/20"
+              className="flex-1 group flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-4 rounded-2xl font-semibold transition-all border border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
             </button>
@@ -79,13 +79,13 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
             </button>
             
             {/* Dropdown Menu */}
-            <div className="absolute bottom-full right-0 w-full mb-2 hidden group-hover/download:flex flex-col bg-slate-800 rounded-xl shadow-xl border border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-2 z-20">
+            <div className="absolute bottom-full right-0 w-full mb-2 hidden group-hover/download:flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-2 z-20">
               <div className="p-2 space-y-1">
-                <button onClick={() => handleDownload('png')} className="w-full px-4 py-3 hover:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-300 hover:text-white transition-colors flex justify-between items-center">
-                  PNG <span className="text-[10px] bg-slate-900 px-2 py-0.5 rounded text-slate-500">RASTER</span>
+                <button onClick={() => handleDownload('png')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex justify-between items-center">
+                  PNG <span className="text-[10px] bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded text-slate-600 dark:text-slate-500">RASTER</span>
                 </button>
-                <button onClick={() => handleDownload('svg')} className="w-full px-4 py-3 hover:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-300 hover:text-white transition-colors flex justify-between items-center">
-                  SVG <span className="text-[10px] bg-blue-900/30 text-blue-400 px-2 py-0.5 rounded">VECTOR</span>
+                <button onClick={() => handleDownload('svg')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors flex justify-between items-center">
+                  SVG <span className="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded">VECTOR</span>
                 </button>
               </div>
             </div>

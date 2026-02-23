@@ -36,8 +36,8 @@ const encodeSms = (phone: string, message: string) =>
 const encodeVcard = (name: string, phone: string, email: string, org: string) =>
   `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL:${phone}\nEMAIL:${email}\nORG:${org}\nEND:VCARD`;
 
-const inputClass = "w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all font-medium";
-const labelClass = "text-xs font-bold text-slate-500 uppercase tracking-wider";
+const inputClass = "w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all font-medium";
+const labelClass = "text-xs font-bold text-slate-500 dark:text-slate-500 uppercase tracking-wider";
 
 export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
   const [dataType, setDataType] = useState<DataType>('url');
@@ -79,12 +79,12 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
   }, [dataType, url, text, ssid, wifiPass, encryption, hidden, emailTo, emailSubject, emailBody, smsPhone, smsMessage, vcName, vcPhone, vcEmail, vcOrg]);
 
   return (
-    <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl shadow-black/20 relative overflow-hidden group">
+    <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 relative overflow-hidden group transition-colors duration-300">
       {/* Decorative gradient glow */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
       
-      <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-white relative z-10">
-        <div className="p-2 bg-slate-800 rounded-lg text-blue-400">
+      <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white relative z-10">
+        <div className="p-2 bg-blue-50 dark:bg-slate-800 rounded-lg text-blue-600 dark:text-blue-400">
           <LinkIcon className="w-5 h-5" />
         </div>
         Content Data
@@ -101,8 +101,8 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
                 onClick={() => setDataType(dt.id)}
                 className={`flex flex-col items-center gap-1.5 px-3 py-3 rounded-xl text-xs font-semibold transition-all border ${
                   dataType === dt.id
-                    ? 'bg-blue-600/20 border-blue-500/50 text-blue-400 shadow-lg shadow-blue-900/10'
-                    : 'bg-slate-950 border-slate-800 text-slate-500 hover:text-slate-300 hover:border-slate-700'
+                    ? 'bg-blue-50 dark:bg-blue-600/20 border-blue-500 dark:border-blue-500/50 text-blue-600 dark:text-blue-400 shadow-lg shadow-blue-500/10 dark:shadow-blue-900/10'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 {dt.icon}
@@ -159,8 +159,8 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
                   onClick={() => setHidden(!hidden)}
                   className={`w-full p-4 rounded-xl font-medium transition-all border ${
                     hidden 
-                      ? 'bg-blue-600/20 border-blue-500/50 text-blue-400' 
-                      : 'bg-slate-950 border-slate-800 text-slate-500'
+                      ? 'bg-blue-50 dark:bg-blue-600/20 border-blue-500 dark:border-blue-500/50 text-blue-600 dark:text-blue-400' 
+                      : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-500'
                   }`}
                 >
                   {hidden ? 'Yes' : 'No'}

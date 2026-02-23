@@ -68,9 +68,9 @@ export const Controls: React.FC<ControlsProps> = ({
       <DataInput setQRData={setUrl} />
 
       {/* 2. Visual Design Card */}
-      <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl shadow-black/20">
-        <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-white">
-          <div className="p-2 bg-slate-800 rounded-lg text-purple-400">
+      <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
+        <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white">
+          <div className="p-2 bg-purple-100 dark:bg-slate-800 rounded-lg text-purple-600 dark:text-purple-400">
             <RefreshCw className="w-5 h-5" />
           </div>
           Visual Style
@@ -80,28 +80,28 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Dot Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Primary Color</label>
-            <div className="flex items-center gap-4 bg-slate-950 p-2 pr-4 rounded-xl border border-slate-800">
+            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800">
               <input 
                 type="color" 
                 value={color} 
                 onChange={(e) => setColor(e.target.value)}
                 className="h-10 w-12 cursor-pointer rounded-lg border-0 p-0 bg-transparent"
               />
-              <span className="text-sm text-slate-300 font-mono flex-grow">{color}</span>
+              <span className="text-sm text-slate-700 dark:text-slate-300 font-mono flex-grow">{color}</span>
             </div>
           </div>
 
           {/* Background Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Background</label>
-            <div className="flex items-center gap-4 bg-slate-950 p-2 pr-4 rounded-xl border border-slate-800">
+            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800">
               <input 
                 type="color" 
                 value={bgColor} 
                 onChange={(e) => setBgColor(e.target.value)}
                 className="h-10 w-12 cursor-pointer rounded-lg border-0 p-0 bg-transparent"
               />
-              <span className="text-sm text-slate-300 font-mono flex-grow">{bgColor}</span>
+              <span className="text-sm text-slate-700 dark:text-slate-300 font-mono flex-grow">{bgColor}</span>
             </div>
           </div>
 
@@ -112,7 +112,7 @@ export const Controls: React.FC<ControlsProps> = ({
               <select 
                 value={dotType}
                 onChange={(e) => setDotType(e.target.value)}
-                className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-900 transition-colors"
+                className="w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
               >
                 <option value="square">Classic Square</option>
                 <option value="dots">Modern Dots</option>
@@ -133,7 +133,7 @@ export const Controls: React.FC<ControlsProps> = ({
               <select 
                 value={errorCorrectionLevel}
                 onChange={(e) => setErrorCorrectionLevel(e.target.value)}
-                className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-900 transition-colors"
+                className="w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
               >
                 <option value="L">Low (7%) - Smallest QR</option>
                 <option value="M">Medium (15%) - Balanced</option>
@@ -153,7 +153,7 @@ export const Controls: React.FC<ControlsProps> = ({
               <select 
                 value={cornerSquareType}
                 onChange={(e) => setCornerSquareType(e.target.value)}
-                className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-900 transition-colors"
+                className="w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
               >
                 <option value="square">Square</option>
                 <option value="dot">Dot</option>
@@ -187,7 +187,7 @@ export const Controls: React.FC<ControlsProps> = ({
           <div className="md:col-span-2 space-y-3">
             <div className="flex justify-between items-center">
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Export Resolution</label>
-              <span className="text-sm font-mono text-purple-400 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">{exportSize}px</span>
+              <span className="text-sm font-mono text-purple-600 dark:text-purple-400 bg-slate-100 dark:bg-slate-950 px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-800">{exportSize}px</span>
             </div>
             <input 
               type="range"
@@ -196,9 +196,9 @@ export const Controls: React.FC<ControlsProps> = ({
               step={256}
               value={exportSize}
               onChange={(e) => setExportSize(Number(e.target.value))}
-              className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+              className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
             />
-            <div className="flex justify-between text-[10px] text-slate-600 font-medium">
+            <div className="flex justify-between text-[10px] text-slate-500 dark:text-slate-600 font-medium">
               <span>256px</span>
               <span>4096px</span>
             </div>
@@ -207,9 +207,9 @@ export const Controls: React.FC<ControlsProps> = ({
       </div>
 
       {/* 3. Logo Upload Card */}
-      <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl shadow-black/20">
-        <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-white">
-          <div className="p-2 bg-slate-800 rounded-lg text-emerald-400">
+      <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
+        <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white">
+          <div className="p-2 bg-emerald-100 dark:bg-slate-800 rounded-lg text-emerald-600 dark:text-emerald-400">
             <ImageIcon className="w-5 h-5" />
           </div>
           Brand Logo
@@ -222,16 +222,16 @@ export const Controls: React.FC<ControlsProps> = ({
               onDrop={onDrop}
               className={`block w-full h-32 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all group ${
                 isDragging 
-                  ? 'border-emerald-400 bg-emerald-500/10' 
-                  : 'border-slate-700 hover:bg-slate-800/50 hover:border-emerald-500/50'
+                  ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10' 
+                  : 'border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-emerald-400 dark:hover:border-emerald-500/50'
               }`}
             >
               <input type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
-              <div className="flex flex-col items-center gap-3 text-slate-500 group-hover:text-emerald-400 transition-colors">
-                <div className={`p-3 rounded-full transition-colors ${isDragging ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 group-hover:bg-slate-700'}`}>
+              <div className="flex flex-col items-center gap-3 text-slate-500 dark:text-slate-500 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
+                <div className={`p-3 rounded-full transition-colors ${isDragging ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'}`}>
                   <Upload className="w-6 h-6" />
                 </div>
-                <span className={`text-sm font-medium ${isDragging ? 'text-emerald-400' : ''}`}>
+                <span className={`text-sm font-medium ${isDragging ? 'text-emerald-600 dark:text-emerald-400' : ''}`}>
                   {isDragging ? 'Drop logo here...' : 'Click or drop logo to upload'}
                 </span>
               </div>
@@ -241,12 +241,12 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Logo Preview Area */}
           {logo && (
             <div className="relative group shrink-0">
-              <div className="w-32 h-32 border border-slate-700 rounded-2xl bg-[url('https://bg-patterns.netlify.app/bg-patterns/subtle-dots.png')] flex items-center justify-center p-2">
+              <div className="w-32 h-32 border border-slate-200 dark:border-slate-700 rounded-2xl bg-[url('https://bg-patterns.netlify.app/bg-patterns/subtle-dots.png')] flex items-center justify-center p-2 bg-white dark:bg-transparent">
                 <img src={logo} alt="Logo preview" className="max-w-full max-h-full object-contain" />
               </div>
               <button 
                 onClick={() => setLogo(null)}
-                className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition-transform hover:scale-110"
+                className="absolute -top-3 -right-3 bg-red-500 text-slate-800 dark:text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition-transform hover:scale-110"
                 title="Remove Logo"
               >
                 <Trash2 className="w-4 h-4" />
@@ -258,9 +258,9 @@ export const Controls: React.FC<ControlsProps> = ({
 
       {/* 4. History Card */}
       {history.length > 0 && (
-        <div className="bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl shadow-black/20">
+        <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
           <div className="flex justify-between items-end mb-6">
-            <h2 className="text-lg font-semibold text-white">Saved Sessions</h2>
+            <h2 className="text-lg font-semibold text-slate-800 dark:text-white">Saved Sessions</h2>
             <button 
               onClick={clearHistory}
               className="text-xs text-red-400 hover:text-red-300 font-medium px-3 py-1 hover:bg-red-500/10 rounded-lg transition-colors"
@@ -273,11 +273,11 @@ export const Controls: React.FC<ControlsProps> = ({
               <div 
                 key={i} 
                 onClick={() => setUrl(hUrl)}
-                className="flex items-center justify-between p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-800 cursor-pointer transition-all group"
+                className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500/50 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-all group"
               >
                 <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="w-2 h-2 rounded-full bg-slate-700 group-hover:bg-blue-500 transition-colors shrink-0"></div>
-                  <span className="text-sm text-slate-400 group-hover:text-white truncate transition-colors">{hUrl}</span>
+                  <div className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-blue-500 transition-colors shrink-0"></div>
+                  <span className="text-sm text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-white truncate transition-colors">{hUrl}</span>
                 </div>
                 <span className="text-xs text-blue-400 opacity-0 group-hover:opacity-100 font-bold tracking-wider px-2">LOAD</span>
               </div>
