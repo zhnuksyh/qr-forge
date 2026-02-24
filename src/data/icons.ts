@@ -37,15 +37,16 @@ export const PREDEFINED_ICONS: PredefinedIcon[] = [
     }
 ];
 
-export const generateIconUrl = (paths: string, color: string) => {
-    // We add a soft background in the SVG so it covers the QR code dots gracefully.
-    // Also use the primary color for the stroke.
+export const generateIconUrl = (paths: string, color: string, bgColor: string, isTransparent: boolean) => {
     const strokeHex = color.startsWith('#') ? color : '#2563eb';
+    const bgFill = bgColor.startsWith('#') ? bgColor : '#ffffff';
 
-    // We create a data URI using base64 rendering of the SVG string.
+    // To reduce whitespace, we scale the 24x24 Lucide icon up significantly.
+    // scale(3.2) brings it to ~76x76 inside the 100x100 viewBox.
+    // translate(11, 11) centers the 76x76 grouped path perfectly within the 100x100 box.
     const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-        <rect width="100" height="100" rx="20" fill="#ffffff" />
-        <g transform="translate(20, 20) scale(2.5)" fill="none" stroke="${strokeHex}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        ${!isTransparent ? `<rect width="100" height="100" rx="20" fill="${bgFill}" />` : ''}
+        <g transform="translate(11, 11) scale(3.2)" fill="none" stroke="${strokeHex}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             ${paths}
         </g>
     </svg>`;

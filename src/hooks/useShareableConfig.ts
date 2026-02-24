@@ -12,6 +12,9 @@ export interface QRConfig {
     cornerSquareType: string;
     cornerDotType: string;
     exportSize: number;
+    logoBgColor: string;
+    logoBgTransparent: boolean;
+    logoMargin: number;
 }
 
 const DEFAULTS: QRConfig = {
@@ -21,7 +24,10 @@ const DEFAULTS: QRConfig = {
     dotType: 'rounded',
     cornerSquareType: 'extra-rounded',
     cornerDotType: 'dot',
-    exportSize: 2000
+    exportSize: 2000,
+    logoBgColor: '#ffffff',
+    logoBgTransparent: true,
+    logoMargin: 5
 };
 
 const PARAM_MAP = {
@@ -31,7 +37,10 @@ const PARAM_MAP = {
     dotType: 'd',
     cornerSquareType: 'cs',
     cornerDotType: 'cd',
-    exportSize: 's'
+    exportSize: 's',
+    logoBgColor: 'lbc',
+    logoBgTransparent: 'lbt',
+    logoMargin: 'lm'
 } as const;
 
 export function encodeConfig(config: QRConfig): string {
@@ -44,6 +53,9 @@ export function encodeConfig(config: QRConfig): string {
     if (config.cornerSquareType !== DEFAULTS.cornerSquareType) params.set(PARAM_MAP.cornerSquareType, config.cornerSquareType);
     if (config.cornerDotType !== DEFAULTS.cornerDotType) params.set(PARAM_MAP.cornerDotType, config.cornerDotType);
     if (config.exportSize !== DEFAULTS.exportSize) params.set(PARAM_MAP.exportSize, String(config.exportSize));
+    if (config.logoBgColor !== DEFAULTS.logoBgColor) params.set(PARAM_MAP.logoBgColor, config.logoBgColor.replace('#', ''));
+    if (!config.logoBgTransparent && DEFAULTS.logoBgTransparent) params.set(PARAM_MAP.logoBgTransparent, '0'); // Non-default is 0
+    if (config.logoMargin !== DEFAULTS.logoMargin) params.set(PARAM_MAP.logoMargin, String(config.logoMargin));
 
     const str = params.toString();
     return str ? `#${str}` : '';
@@ -76,6 +88,15 @@ export function decodeConfig(): Partial<QRConfig> {
 
     const s = params.get(PARAM_MAP.exportSize);
     if (s) config.exportSize = parseInt(s, 10);
+
+    const lbc = params.get(PARAM_MAP.logoBgColor);
+    if (lbc) config.logoBgColor = `#${lbc}`;
+
+    const lbt = params.get(PARAM_MAP.logoBgTransparent);
+    if (lbt === '0') config.logoBgTransparent = false;
+
+    const lm = params.get(PARAM_MAP.logoMargin);
+    if (lm) config.logoMargin = parseInt(lm, 10);
 
     return config;
 }

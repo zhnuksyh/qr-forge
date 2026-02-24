@@ -8,6 +8,9 @@ export interface StyleState {
     cornerSquareType: string;
     cornerDotType: string;
     exportSize: number;
+    logoBgColor: string;
+    logoBgTransparent: boolean;
+    logoMargin: number;
 }
 
 const MAX_HISTORY = 30;

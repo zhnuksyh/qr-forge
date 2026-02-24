@@ -18,17 +18,20 @@ export default function App() {
     color, setColor, 
     bgColor, setBgColor, 
     bgTransparent, setBgTransparent,
-    logo, setLogo, 
+    logoBgColor, setLogoBgColor,
+    logoBgTransparent, setLogoBgTransparent,
+    logoMargin, setLogoMargin,
+    logo, rawLogo, activeIconId,
     logoSize, setLogoSize,
     dotType, setDotType, 
     cornerSquareType, setCornerSquareType,
     cornerDotType, setCornerDotType,
     exportSize, setExportSize,
     setStyle,
-    undo, redo, canUndo, canRedo,
+            undo, redo, canUndo, canRedo,
     isLibLoaded, 
     qrRef, 
-    handleLogoUpload, 
+    handleLogoUpload, handleClearLogo, handleSelectIcon,
     handleDownload,
     handleCopySvg 
   } = useQRSystem();
@@ -51,6 +54,9 @@ export default function App() {
       cornerSquareType: preset.cornerSquareType,
       cornerDotType: preset.cornerDotType,
       exportSize,
+      logoBgColor: preset.bgColor, // Match preset bg
+      logoBgTransparent: true,
+      logoMargin: 5
     });
     toast(`Applied "${preset.name}" preset`);
   };
@@ -72,7 +78,8 @@ export default function App() {
   const onShareConfig = async () => {
     const hash = encodeConfig({
       color, bgColor, bgTransparent, dotType,
-      cornerSquareType, cornerDotType, exportSize
+      cornerSquareType, cornerDotType, exportSize,
+      logoBgColor, logoBgTransparent, logoMargin
     });
     const shareUrl = `${window.location.origin}${window.location.pathname}${hash}`;
     try {
@@ -101,13 +108,18 @@ export default function App() {
             color={color} setColor={setColor}
             bgColor={bgColor} setBgColor={setBgColor}
             bgTransparent={bgTransparent} setBgTransparent={setBgTransparent}
-            logo={logo} setLogo={setLogo}
+            logo={logo} rawLogo={rawLogo} activeIconId={activeIconId}
             logoSize={logoSize} setLogoSize={setLogoSize}
+            logoBgColor={logoBgColor} setLogoBgColor={setLogoBgColor}
+            logoBgTransparent={logoBgTransparent} setLogoBgTransparent={setLogoBgTransparent}
+            logoMargin={logoMargin} setLogoMargin={setLogoMargin}
             dotType={dotType} setDotType={setDotType}
             cornerSquareType={cornerSquareType} setCornerSquareType={setCornerSquareType}
             cornerDotType={cornerDotType} setCornerDotType={setCornerDotType}
             exportSize={exportSize} setExportSize={setExportSize}
             handleLogoUpload={handleLogoUpload}
+            handleClearLogo={handleClearLogo}
+            handleSelectIcon={handleSelectIcon}
             onApplyPreset={onApplyPreset}
             history={history}
             clearHistory={clearHistory}
@@ -137,7 +149,8 @@ export default function App() {
             onGenerate={(urls) => {
               generateBatch(urls, {
                 color, bgColor, bgTransparent, dotType,
-                cornerSquareType, cornerDotType, exportSize
+                cornerSquareType, cornerDotType, exportSize,
+                logoBgColor, logoBgTransparent, logoMargin
               });
               toast(`Generating ${urls.length} QR codes...`);
             }}

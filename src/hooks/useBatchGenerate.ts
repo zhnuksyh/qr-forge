@@ -10,6 +10,9 @@ interface BatchStyleConfig {
     cornerSquareType: string;
     cornerDotType: string;
     exportSize: number;
+    logoBgColor: string;
+    logoBgTransparent: boolean;
+    logoMargin: number;
 }
 
 export const useBatchGenerate = () => {

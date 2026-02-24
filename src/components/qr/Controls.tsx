@@ -3,7 +3,7 @@ import { RefreshCw, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
 import { DataInput } from './DataInput';
 import { PresetsBar } from './PresetsBar';
 import type { QRPreset } from '../../data/presets';
-import { PREDEFINED_ICONS, generateIconUrl } from '../../data/icons';
+import { PREDEFINED_ICONS } from '../../data/icons';
 
 interface ControlsProps {
   setUrl: (url: string) => void;
@@ -14,7 +14,14 @@ interface ControlsProps {
   bgTransparent: boolean;
   setBgTransparent: (transparent: boolean) => void;
   logo: string | null;
-  setLogo: (logo: string | null) => void;
+  rawLogo: string | null;
+  activeIconId: string | null;
+  logoBgColor: string;
+  setLogoBgColor: (color: string) => void;
+  logoBgTransparent: boolean;
+  setLogoBgTransparent: (transparent: boolean) => void;
+  logoMargin: number;
+  setLogoMargin: (margin: number) => void;
   logoSize: number;
   setLogoSize: (size: number) => void;
   dotType: string;
@@ -25,7 +32,9 @@ interface ControlsProps {
   setCornerDotType: (type: string) => void;
   exportSize: number;
   setExportSize: (size: number) => void;
-  handleLogoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleLogoUpload: (file: File) => void;
+  handleClearLogo: () => void;
+  handleSelectIcon: (iconId: string) => void;
   onApplyPreset: (preset: QRPreset) => void;
   history: string[];
   clearHistory: () => void;
@@ -36,13 +45,16 @@ export const Controls: React.FC<ControlsProps> = ({
   color, setColor, 
   bgColor, setBgColor, 
   bgTransparent, setBgTransparent,
-  logo, setLogo, 
+  logo, rawLogo, activeIconId,
+  logoBgColor, setLogoBgColor,
+  logoBgTransparent, setLogoBgTransparent,
+  logoMargin, setLogoMargin, 
   logoSize, setLogoSize,
   dotType, setDotType,
   cornerSquareType, setCornerSquareType,
   cornerDotType, setCornerDotType,
   exportSize, setExportSize,
-  handleLogoUpload,
+  handleLogoUpload, handleClearLogo, handleSelectIcon,
   onApplyPreset,
   history,
   clearHistory
@@ -64,9 +76,7 @@ export const Controls: React.FC<ControlsProps> = ({
     setIsDragging(false);
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (event) => setLogo(event.target?.result as string);
-        reader.readAsDataURL(file);
+        handleLogoUpload(file);
     }
   };
 
@@ -232,9 +242,13 @@ export const Controls: React.FC<ControlsProps> = ({
             {PREDEFINED_ICONS.map((icon) => (
               <button
                 key={icon.id}
-                onClick={() => setLogo(generateIconUrl(icon.paths, color))}
+                onClick={() => handleSelectIcon(icon.id)}
                 title={icon.name}
-                className="flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors shrink-0 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors shrink-0 group focus:outline-none focus:ring-2 focus:ring-emerald-500
+                  ${activeIconId === icon.id 
+                    ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10' 
+                    : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10'}
+                `}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                   <g dangerouslySetInnerHTML={{ __html: icon.paths }} />
@@ -257,7 +271,10 @@ export const Controls: React.FC<ControlsProps> = ({
                   : 'border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:border-emerald-400 dark:hover:border-emerald-500/50'
               }`}
             >
-              <input type="file" accept="image/*" onChange={handleLogoUpload} className="sr-only" />
+              <input type="file" accept="image/*" onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) handleLogoUpload(file);
+              }} className="sr-only" />
               <div className="flex flex-col items-center gap-3 text-slate-500 dark:text-slate-500 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
                 <div className={`p-3 rounded-full transition-colors ${isDragging ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'}`}>
                   <Upload className="w-6 h-6" />
@@ -276,7 +293,7 @@ export const Controls: React.FC<ControlsProps> = ({
                 <img src={logo} alt="Logo preview" className="max-w-full max-h-full object-contain" />
               </div>
               <button 
-                onClick={() => setLogo(null)}
+                onClick={handleClearLogo}
                 className="absolute -top-3 -right-3 bg-red-500 text-slate-800 dark:text-white rounded-full p-2 shadow-lg hover:bg-red-600 transition-transform hover:scale-110"
                 title="Remove Logo"
               >
@@ -286,25 +303,79 @@ export const Controls: React.FC<ControlsProps> = ({
           )}
         </div>
 
-        {/* Logo Size Slider */}
-        {logo && (
-          <div className="mt-6 space-y-3">
-            <div className="flex justify-between items-center">
-              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Logo Size</label>
-              <span className="text-xs font-mono text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-2 py-0.5 rounded">{Math.round(logoSize * 100)}%</span>
-            </div>
-            <input
-              type="range"
-              min="0.15"
-              max="0.5"
-              step="0.01"
-              value={logoSize}
-              onChange={(e) => setLogoSize(parseFloat(e.target.value))}
-              className="w-full accent-emerald-500 cursor-pointer"
-            />
-            <div className="flex justify-between text-[10px] text-slate-400">
-              <span>Small</span>
-              <span>Large</span>
+        {/* Logo Configuration & Sizing */}
+        {(rawLogo || activeIconId) && (
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-6">
+            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Logo Styling</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Logo Background Controls */}
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Background Color</label>
+                    <span className="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">{logoBgColor}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-105 transition-transform flex-shrink-0 cursor-pointer">
+                      <input 
+                        type="color" 
+                        value={logoBgColor}
+                        onChange={(e) => setLogoBgColor(e.target.value)}
+                        disabled={logoBgTransparent}
+                        className="absolute -top-2 -left-2 w-16 h-16 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      />
+                    </div>
+                    <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer">
+                      <div className="relative flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={logoBgTransparent}
+                          onChange={(e) => setLogoBgTransparent(e.target.checked)}
+                          className="peer sr-only"
+                        />
+                        <div className="w-9 h-5 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                      </div>
+                      Transparent
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Logo Layout Controls */}
+              <div className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Whitespace Margin</label>
+                    <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded border border-emerald-100 dark:border-emerald-800">{logoMargin}px</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="20"
+                    step="1"
+                    value={logoMargin}
+                    onChange={(e) => setLogoMargin(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                  />
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Logo Scale</label>
+                    <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded border border-emerald-100 dark:border-emerald-800">{Math.round(logoSize * 100)}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="0.15"
+                    max="0.5"
+                    step="0.01"
+                    value={logoSize}
+                    onChange={(e) => setLogoSize(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '../types';
 import { decodeConfig } from './useShareableConfig';
 import { useUndoRedo, StyleState } from './useUndoRedo';
+import { processLogo } from '../utils/imageProcessor';
+import { generateIconUrl, PREDEFINED_ICONS } from '../data/icons';
 
 export const useQRSystem = () => {
     // Read URL hash for shared config on mount
@@ -14,7 +16,10 @@ export const useQRSystem = () => {
         dotType: initialConfig.dotType || 'rounded',
         cornerSquareType: initialConfig.cornerSquareType || 'extra-rounded',
         cornerDotType: initialConfig.cornerDotType || 'dot',
-        exportSize: initialConfig.exportSize || 2000
+        exportSize: initialConfig.exportSize || 2000,
+        logoBgColor: initialConfig.logoBgColor || '#ffffff',
+        logoBgTransparent: initialConfig.logoBgTransparent ?? true,
+        logoMargin: initialConfig.logoMargin ?? 5
     };
 
     // Undo/Redo state management
@@ -22,7 +27,11 @@ export const useQRSystem = () => {
 
     // Non-style state (not tracked by undo/redo)
     const [url, setUrl] = useState('https://example.com');
-    const [logo, setLogo] = useState<string | null>(null);
+
+    // Logo State Management
+    const [rawLogo, setRawLogo] = useState<string | null>(null);
+    const [activeIconId, setActiveIconId] = useState<string | null>(null);
+    const [processedLogo, setProcessedLogo] = useState<string | null>(null);
     const [logoSize, setLogoSize] = useState(0.4); // 0.2 to 0.5 ratio
 
     // Convenience setters that update the style object
@@ -33,6 +42,9 @@ export const useQRSystem = () => {
     const setCornerSquareType = useCallback((v: string) => setStyle({ ...style, cornerSquareType: v }), [style, setStyle]);
     const setCornerDotType = useCallback((v: string) => setStyle({ ...style, cornerDotType: v }), [style, setStyle]);
     const setExportSize = useCallback((v: number) => setStyle({ ...style, exportSize: v }), [style, setStyle]);
+    const setLogoBgColor = useCallback((v: string) => setStyle({ ...style, logoBgColor: v }), [style, setStyle]);
+    const setLogoBgTransparent = useCallback((v: boolean) => setStyle({ ...style, logoBgTransparent: v }), [style, setStyle]);
+    const setLogoMargin = useCallback((v: number) => setStyle({ ...style, logoMargin: v }), [style, setStyle]);
 
     // System State (Library Loading Status)
     const [isLibLoaded, setIsLibLoaded] = useState(false);
@@ -55,7 +67,31 @@ export const useQRSystem = () => {
         document.body.appendChild(script);
     }, []);
 
-    // 2. Core Logic: QR Generation & Update Cycle
+    // 2. Logo Processing Effect
+    useEffect(() => {
+        let isStale = false;
+
+        const processInternalLogo = async () => {
+            if (activeIconId) {
+                const icon = PREDEFINED_ICONS.find(i => i.id === activeIconId);
+                if (icon) {
+                    const iconUrl = generateIconUrl(icon.paths, style.color, style.logoBgColor, style.logoBgTransparent);
+                    if (!isStale) setProcessedLogo(iconUrl);
+                }
+            } else if (rawLogo) {
+                const processed = await processLogo(rawLogo, style.logoBgColor, style.logoBgTransparent);
+                if (!isStale) setProcessedLogo(processed);
+            } else {
+                if (!isStale) setProcessedLogo(null);
+            }
+        };
+
+        processInternalLogo();
+
+        return () => { isStale = true; };
+    }, [rawLogo, activeIconId, style.color, style.logoBgColor, style.logoBgTransparent]);
+
+    // 3. Core Logic: QR Generation & Update Cycle
     useEffect(() => {
         if (!isLibLoaded || !ref.current) return;
 
@@ -73,7 +109,7 @@ export const useQRSystem = () => {
             image: '',
             dotsOptions: { color: style.color, type: style.dotType },
             backgroundOptions: { color: style.bgTransparent ? 'transparent' : style.bgColor },
-            imageOptions: { crossOrigin: 'anonymous', margin: 5, imageSize: logoSize },
+            imageOptions: { crossOrigin: 'anonymous', margin: style.logoMargin, imageSize: logoSize },
             cornersSquareOptions: { type: style.cornerSquareType },
             cornersDotOptions: { type: style.cornerDotType },
             qrOptions: { errorCorrectionLevel: 'Q' }
@@ -87,22 +123,33 @@ export const useQRSystem = () => {
         } else {
             qrCode.current.update({
                 ...options,
-                image: logo || undefined
+                image: processedLogo || undefined
             });
         }
-    }, [isLibLoaded, url, style, logo, logoSize]);
+    }, [isLibLoaded, url, style, processedLogo, logoSize]);
 
     // Handlers
-    const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+    const handleLogoUpload = (file: File) => {
         if (file) {
+            setActiveIconId(null);
             const reader = new FileReader();
             reader.onload = (e) => {
-                setLogo(e.target?.result as string);
+                setRawLogo(e.target?.result as string);
             };
             reader.readAsDataURL(file);
         }
     };
+
+    const handleClearLogo = useCallback(() => {
+        setRawLogo(null);
+        setActiveIconId(null);
+        setProcessedLogo(null);
+    }, []);
+
+    const handleSelectIcon = useCallback((iconId: string) => {
+        setRawLogo(null);
+        setActiveIconId(iconId);
+    }, []);
 
     const handleDownload = async (ext: 'png' | 'svg' | 'jpeg') => {
         if (qrCode.current && url.trim()) {
@@ -149,7 +196,11 @@ export const useQRSystem = () => {
         color: style.color, setColor,
         bgColor: style.bgColor, setBgColor,
         bgTransparent: style.bgTransparent, setBgTransparent,
-        logo, setLogo,
+        logoBgColor: style.logoBgColor, setLogoBgColor,
+        logoBgTransparent: style.logoBgTransparent, setLogoBgTransparent,
+        logoMargin: style.logoMargin, setLogoMargin,
+        logo: processedLogo,
+        rawLogo, handleClearLogo, handleSelectIcon, activeIconId,
         logoSize, setLogoSize,
         dotType: style.dotType, setDotType,
         cornerSquareType: style.cornerSquareType, setCornerSquareType,
