@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import '../types';
 import { decodeConfig } from './useShareableConfig';
 import { useUndoRedo, StyleState } from './useUndoRedo';
