@@ -6,6 +6,7 @@ import { PreviewCard } from './components/qr/PreviewCard';
 import { useQRSystem } from './hooks/useQRSystem';
 import { useHistory } from './hooks/useHistory';
 import { useToast } from './components/ui/Toast';
+import { encodeConfig } from './hooks/useShareableConfig';
 
 export default function App() {
   const { 
@@ -47,6 +48,21 @@ export default function App() {
     }
   };
 
+  const onShareConfig = async () => {
+    const hash = encodeConfig({
+      color, bgColor, bgTransparent, dotType,
+      cornerSquareType, cornerDotType, exportSize
+    });
+    const shareUrl = `${window.location.origin}${window.location.pathname}${hash}`;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      window.history.replaceState(null, '', hash || window.location.pathname);
+      toast('Config link copied to clipboard');
+    } catch {
+      toast('Failed to copy link', 'error');
+    }
+  };
+
   return (
     <div className="min-h-screen selection:bg-blue-500 selection:text-white flex flex-col">
       {/* [Style Injection] Loading Poppins Font */}
@@ -80,6 +96,7 @@ export default function App() {
             saveToHistory={onSave}
             handleDownload={onDownload}
             handleCopySvg={onCopySvg}
+            handleShareConfig={onShareConfig}
             bgTransparent={bgTransparent}
           />
         </div>

@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../types';
+import { decodeConfig } from './useShareableConfig';
 
 export const useQRSystem = () => {
+    // Read URL hash for shared config on mount
+    const initialConfig = decodeConfig();
+
     // Core QR Content State
     const [url, setUrl] = useState('https://example.com');
-    const [color, setColor] = useState('#2563eb'); // Default Blue
-    const [bgColor, setBgColor] = useState('#ffffff');
-    const [bgTransparent, setBgTransparent] = useState(false);
+    const [color, setColor] = useState(initialConfig.color || '#2563eb');
+    const [bgColor, setBgColor] = useState(initialConfig.bgColor || '#ffffff');
+    const [bgTransparent, setBgTransparent] = useState(initialConfig.bgTransparent || false);
     const [logo, setLogo] = useState<string | null>(null);
-    const [dotType, setDotType] = useState<string>('rounded');
-    const [cornerSquareType, setCornerSquareType] = useState<string>('extra-rounded');
-    const [cornerDotType, setCornerDotType] = useState<string>('dot');
-    const [exportSize, setExportSize] = useState<number>(2000);
+    const [dotType, setDotType] = useState<string>(initialConfig.dotType || 'rounded');
+    const [cornerSquareType, setCornerSquareType] = useState<string>(initialConfig.cornerSquareType || 'extra-rounded');
+    const [cornerDotType, setCornerDotType] = useState<string>(initialConfig.cornerDotType || 'dot');
+    const [exportSize, setExportSize] = useState<number>(initialConfig.exportSize || 2000);
 
     // System State (Library Loading Status)
     const [isLibLoaded, setIsLibLoaded] = useState(false);
