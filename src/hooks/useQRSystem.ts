@@ -6,9 +6,9 @@ export const useQRSystem = () => {
     const [url, setUrl] = useState('https://example.com');
     const [color, setColor] = useState('#2563eb'); // Default Blue
     const [bgColor, setBgColor] = useState('#ffffff');
+    const [bgTransparent, setBgTransparent] = useState(false);
     const [logo, setLogo] = useState<string | null>(null);
     const [dotType, setDotType] = useState<string>('rounded');
-    const [errorCorrectionLevel, setErrorCorrectionLevel] = useState<string>('Q');
     const [cornerSquareType, setCornerSquareType] = useState<string>('extra-rounded');
     const [cornerDotType, setCornerDotType] = useState<string>('dot');
     const [exportSize, setExportSize] = useState<number>(2000);
@@ -51,11 +51,11 @@ export const useQRSystem = () => {
             data: url,
             image: '',
             dotsOptions: { color: color, type: dotType },
-            backgroundOptions: { color: bgColor },
+            backgroundOptions: { color: bgTransparent ? 'transparent' : bgColor },
             imageOptions: { crossOrigin: 'anonymous', margin: 5 },
-            cornersSquareOptions: { type: cornerSquareType },
-            cornersDotOptions: { type: cornerDotType },
-            qrOptions: { errorCorrectionLevel: errorCorrectionLevel }
+            cornersSquareOptions: { type: cornerSquareType, color: color },
+            cornersDotOptions: { type: cornerDotType, color: color },
+            qrOptions: { errorCorrectionLevel: 'Q' }
         };
 
         if (!qrCode.current) {
@@ -69,7 +69,7 @@ export const useQRSystem = () => {
                 image: logo || undefined
             });
         }
-    }, [isLibLoaded, url, color, bgColor, logo, dotType, errorCorrectionLevel, cornerSquareType, cornerDotType]);
+    }, [isLibLoaded, url, color, bgColor, bgTransparent, logo, dotType, cornerSquareType, cornerDotType]);
 
     // Handlers
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,9 +127,9 @@ export const useQRSystem = () => {
         url, setUrl,
         color, setColor,
         bgColor, setBgColor,
+        bgTransparent, setBgTransparent,
         logo, setLogo,
         dotType, setDotType,
-        errorCorrectionLevel, setErrorCorrectionLevel,
         cornerSquareType, setCornerSquareType,
         cornerDotType, setCornerDotType,
         exportSize, setExportSize,

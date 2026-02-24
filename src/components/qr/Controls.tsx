@@ -8,12 +8,12 @@ interface ControlsProps {
   setColor: (color: string) => void;
   bgColor: string;
   setBgColor: (color: string) => void;
+  bgTransparent: boolean;
+  setBgTransparent: (transparent: boolean) => void;
   logo: string | null;
   setLogo: (logo: string | null) => void;
   dotType: string;
   setDotType: (type: string) => void;
-  errorCorrectionLevel: string;
-  setErrorCorrectionLevel: (level: string) => void;
   cornerSquareType: string;
   setCornerSquareType: (type: string) => void;
   cornerDotType: string;
@@ -29,9 +29,9 @@ export const Controls: React.FC<ControlsProps> = ({
   setUrl, 
   color, setColor, 
   bgColor, setBgColor, 
+  bgTransparent, setBgTransparent,
   logo, setLogo, 
-  dotType, setDotType, 
-  errorCorrectionLevel, setErrorCorrectionLevel,
+  dotType, setDotType,
   cornerSquareType, setCornerSquareType,
   cornerDotType, setCornerDotType,
   exportSize, setExportSize,
@@ -94,14 +94,30 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Background Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Background</label>
-            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-purple-500 transition-shadow">
-              <input 
-                type="color" 
-                value={bgColor} 
-                onChange={(e) => setBgColor(e.target.value)}
-                className="h-10 w-12 cursor-pointer rounded-lg border-0 p-0 bg-transparent"
-              />
-              <span className="text-sm text-slate-700 dark:text-slate-300 font-mono flex-grow">{bgColor}</span>
+            <div className="flex items-center justify-between gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-purple-500 transition-shadow">
+              <div className="flex items-center gap-4">
+                <input 
+                  type="color" 
+                  value={bgColor} 
+                  onChange={(e) => setBgColor(e.target.value)}
+                  disabled={bgTransparent}
+                  className={`w-10 h-10 rounded-lg cursor-pointer border-0 bg-transparent ${bgTransparent ? 'opacity-50 cursor-not-allowed' : ''}`}
+                />
+                <span className={`text-sm font-medium uppercase font-mono ${bgTransparent ? 'text-slate-400 opacity-50' : 'text-slate-700 dark:text-slate-300'}`}>
+                  {bgColor}
+                </span>
+              </div>
+              <label className="flex items-center gap-2 cursor-pointer group">
+                <input 
+                  type="checkbox"
+                  checked={bgTransparent}
+                  onChange={(e) => setBgTransparent(e.target.checked)}
+                  className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-purple-600 focus:ring-purple-500 bg-white dark:bg-slate-900 cursor-pointer transition-colors"
+                />
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+                  Transparent
+                </span>
+              </label>
             </div>
           </div>
 
@@ -126,25 +142,6 @@ export const Controls: React.FC<ControlsProps> = ({
             </div>
           </div>
 
-          {/* Error Correction Level */}
-          <div className="md:col-span-2 space-y-3">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Error Correction</label>
-            <div className="relative">
-              <select 
-                value={errorCorrectionLevel}
-                onChange={(e) => setErrorCorrectionLevel(e.target.value)}
-                className="w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
-              >
-                <option value="L">Low (7%) - Smallest QR</option>
-                <option value="M">Medium (15%) - Balanced</option>
-                <option value="Q">Quartile (25%) - Recommended with logos</option>
-                <option value="H">High (30%) - Maximum recovery</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </div>
-            </div>
-          </div>
 
           {/* Corner Square Style */}
           <div className="space-y-3">

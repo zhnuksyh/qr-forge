@@ -12,9 +12,9 @@ export default function App() {
     url, setUrl, 
     color, setColor, 
     bgColor, setBgColor, 
+    bgTransparent, setBgTransparent,
     logo, setLogo, 
     dotType, setDotType, 
-    errorCorrectionLevel, setErrorCorrectionLevel,
     cornerSquareType, setCornerSquareType,
     cornerDotType, setCornerDotType,
     exportSize, setExportSize,
@@ -63,9 +63,9 @@ export default function App() {
             setUrl={setUrl}
             color={color} setColor={setColor}
             bgColor={bgColor} setBgColor={setBgColor}
+            bgTransparent={bgTransparent} setBgTransparent={setBgTransparent}
             logo={logo} setLogo={setLogo}
             dotType={dotType} setDotType={setDotType}
-            errorCorrectionLevel={errorCorrectionLevel} setErrorCorrectionLevel={setErrorCorrectionLevel}
             cornerSquareType={cornerSquareType} setCornerSquareType={setCornerSquareType}
             cornerDotType={cornerDotType} setCornerDotType={setCornerDotType}
             exportSize={exportSize} setExportSize={setExportSize}
