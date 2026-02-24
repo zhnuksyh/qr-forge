@@ -3,6 +3,7 @@ import { RefreshCw, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
 import { DataInput } from './DataInput';
 import { PresetsBar } from './PresetsBar';
 import type { QRPreset } from '../../data/presets';
+import { PREDEFINED_ICONS, generateIconUrl } from '../../data/icons';
 
 interface ControlsProps {
   setUrl: (url: string) => void;
@@ -223,6 +224,27 @@ export const Controls: React.FC<ControlsProps> = ({
           </div>
           Brand Logo
         </h2>
+
+        {/* Predefined Quick Icons */}
+        <div className="mb-6 space-y-3">
+          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Quick Icons</label>
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+            {PREDEFINED_ICONS.map((icon) => (
+              <button
+                key={icon.id}
+                onClick={() => setLogo(generateIconUrl(icon.paths, color))}
+                title={icon.name}
+                className="flex flex-col items-center gap-2 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors shrink-0 group focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  <g dangerouslySetInnerHTML={{ __html: icon.paths }} />
+                </svg>
+                <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">{icon.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1">
             <label 
