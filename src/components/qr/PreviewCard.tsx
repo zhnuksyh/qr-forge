@@ -7,6 +7,7 @@ interface PreviewCardProps {
   saveToHistory: () => void;
   handleDownload: (ext: 'png' | 'svg' | 'jpeg') => void;
   handleCopySvg: () => void;
+  bgTransparent?: boolean;
 }
 
 export const PreviewCard: React.FC<PreviewCardProps> = ({ 
@@ -14,7 +15,8 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
   qrRef, 
   saveToHistory, 
   handleDownload,
-  handleCopySvg 
+  handleCopySvg,
+  bgTransparent
 }) => {
   return (
     <div className="lg:col-span-5">
@@ -29,7 +31,7 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
           <div className="flex flex-col items-center justify-center">
             <div 
               ref={qrRef} 
-              className="qr-container bg-white p-6 rounded-2xl shadow-inner border border-slate-200 dark:border-slate-100 flex justify-center items-center min-h-[300px]"
+              className={`qr-container bg-white p-6 rounded-2xl shadow-inner border border-slate-200 dark:border-slate-100 flex justify-center items-center min-h-[300px] transition-colors ${bgTransparent ? 'bg-checkerboard' : ''}`}
               // The library injects the canvas/svg here
             >
               {!isLibLoaded && (

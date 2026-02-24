@@ -53,9 +53,22 @@ export const useQRSystem = () => {
             dotsOptions: { color: color, type: dotType },
             backgroundOptions: { color: bgTransparent ? 'transparent' : bgColor },
             imageOptions: { crossOrigin: 'anonymous', margin: 5 },
-            cornersSquareOptions: { type: cornerSquareType, color: color },
-            cornersDotOptions: { type: cornerDotType, color: color },
+            cornersSquareOptions: { type: cornerSquareType },
+            cornersDotOptions: { type: cornerDotType },
             qrOptions: { errorCorrectionLevel: 'Q' }
+        };
+
+        // Fix: qr-code-styling adds rotate(90/-90) on corner clipPath children
+        // that breaks SVG rendering at small sizes. Strip them after render.
+        const fixCornerClips = () => {
+            const svg = ref.current?.querySelector('svg');
+            if (!svg) return;
+            svg.querySelectorAll('clipPath path, clipPath circle').forEach(el => {
+                const t = el.getAttribute('transform');
+                if (t && /rotate\((90|-90)/.test(t)) {
+                    el.removeAttribute('transform');
+                }
+            });
         };
 
         if (!qrCode.current) {
@@ -63,11 +76,13 @@ export const useQRSystem = () => {
 
             ref.current.innerHTML = '';
             qrCode.current.append(ref.current);
+            setTimeout(fixCornerClips, 0);
         } else {
             qrCode.current.update({
                 ...options,
                 image: logo || undefined
             });
+            setTimeout(fixCornerClips, 0);
         }
     }, [isLibLoaded, url, color, bgColor, bgTransparent, logo, dotType, cornerSquareType, cornerDotType]);
 

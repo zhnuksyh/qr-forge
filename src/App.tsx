@@ -80,6 +80,7 @@ export default function App() {
             saveToHistory={onSave}
             handleDownload={onDownload}
             handleCopySvg={onCopySvg}
+            bgTransparent={bgTransparent}
           />
         </div>
       </main>
