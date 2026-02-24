@@ -23,6 +23,7 @@ export const useQRSystem = () => {
     // Non-style state (not tracked by undo/redo)
     const [url, setUrl] = useState('https://example.com');
     const [logo, setLogo] = useState<string | null>(null);
+    const [logoSize, setLogoSize] = useState(0.4); // 0.2 to 0.5 ratio
 
     // Convenience setters that update the style object
     const setColor = useCallback((v: string) => setStyle({ ...style, color: v }), [style, setStyle]);
@@ -67,28 +68,15 @@ export const useQRSystem = () => {
         const options = {
             width: 300,
             height: 300,
-            type: 'svg',
+            type: 'canvas', // Canvas fixes all browser SVG clipPath rotation bugs for preview
             data: url,
             image: '',
             dotsOptions: { color: style.color, type: style.dotType },
             backgroundOptions: { color: style.bgTransparent ? 'transparent' : style.bgColor },
-            imageOptions: { crossOrigin: 'anonymous', margin: 5 },
+            imageOptions: { crossOrigin: 'anonymous', margin: 5, imageSize: logoSize },
             cornersSquareOptions: { type: style.cornerSquareType },
             cornersDotOptions: { type: style.cornerDotType },
             qrOptions: { errorCorrectionLevel: 'Q' }
-        };
-
-        // Fix: qr-code-styling adds rotate(90/-90) on corner clipPath children
-        // that breaks SVG rendering at small sizes. Strip them after render.
-        const fixCornerClips = () => {
-            const svg = ref.current?.querySelector('svg');
-            if (!svg) return;
-            svg.querySelectorAll('clipPath path, clipPath circle').forEach(el => {
-                const t = el.getAttribute('transform');
-                if (t && /rotate\((90|-90)/.test(t)) {
-                    el.removeAttribute('transform');
-                }
-            });
         };
 
         if (!qrCode.current) {
@@ -96,15 +84,13 @@ export const useQRSystem = () => {
 
             ref.current.innerHTML = '';
             qrCode.current.append(ref.current);
-            setTimeout(fixCornerClips, 0);
         } else {
             qrCode.current.update({
                 ...options,
                 image: logo || undefined
             });
-            setTimeout(fixCornerClips, 0);
         }
-    }, [isLibLoaded, url, style, logo]);
+    }, [isLibLoaded, url, style, logo, logoSize]);
 
     // Handlers
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,10 +150,12 @@ export const useQRSystem = () => {
         bgColor: style.bgColor, setBgColor,
         bgTransparent: style.bgTransparent, setBgTransparent,
         logo, setLogo,
+        logoSize, setLogoSize,
         dotType: style.dotType, setDotType,
         cornerSquareType: style.cornerSquareType, setCornerSquareType,
         cornerDotType: style.cornerDotType, setCornerDotType,
         exportSize: style.exportSize, setExportSize,
+        setStyle, // expose for batch updates (presets)
         undo, redo, canUndo, canRedo,
         isLibLoaded,
         qrRef: ref,

@@ -79,7 +79,7 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
   }, [dataType, url, text, ssid, wifiPass, encryption, hidden, emailTo, emailSubject, emailBody, smsPhone, smsMessage, vcName, vcPhone, vcEmail, vcOrg]);
 
   return (
-    <div className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 relative overflow-hidden group transition-colors duration-300">
+    <div data-tour="data-input" className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 relative overflow-hidden group transition-colors duration-300">
       {/* Decorative gradient glow */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
       

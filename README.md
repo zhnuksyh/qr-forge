@@ -1,5 +1,7 @@
 # Qrypt 🛡️
 
+![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2Fzhnuksyh%2Fqr-forge.json%3Fcolor%3Dblue&label=visitors&style=flat-square)
+
 **"I was tired of every online QR generator verifying my credit card just to download a PNG. So I built my own."**
 
 Qrypt is a professional-grade, **Client-Side Only** QR Code generator. It runs entirely in your browser, meaning your data never leaves your device, and it will **never** ask you for a subscription.
@@ -20,8 +22,13 @@ It generates standard, static QR codes directly on your computer. The pixel patt
 -   **Multi-Type Data**: Generate QR codes for URLs, Wi-Fi, vCards, Email, SMS, and plain text.
 -   **Vector Quality**: Export crystal-clear SVGs or high-res PNGs (up to 4096px).
 -   **Fully Customizable**: Colors, dot styles, corner styles, error correction levels.
+-   **Style Presets**: One-click themes — Classic, Ocean, Neon, Minimal, Corporate, Sunset, Berry.
+-   **Shareable Config Links**: Share your exact style config via URL hash.
+-   **Batch Generation**: Paste multiple URLs and download all QR codes as a ZIP.
+-   **Undo/Redo**: Step through your style customization history.
 -   **Logo Support**: Embed your brand logo seamlessly.
 -   **PWA Ready**: Install it and use it fully offline.
+-   **Guided Onboarding**: First-visit tooltip tour to get started fast.
 -   **Privacy Focused**: Secure by design.
 
 ## 🛠️ Tech Stack

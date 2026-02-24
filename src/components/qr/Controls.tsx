@@ -14,6 +14,8 @@ interface ControlsProps {
   setBgTransparent: (transparent: boolean) => void;
   logo: string | null;
   setLogo: (logo: string | null) => void;
+  logoSize: number;
+  setLogoSize: (size: number) => void;
   dotType: string;
   setDotType: (type: string) => void;
   cornerSquareType: string;
@@ -34,6 +36,7 @@ export const Controls: React.FC<ControlsProps> = ({
   bgColor, setBgColor, 
   bgTransparent, setBgTransparent,
   logo, setLogo, 
+  logoSize, setLogoSize,
   dotType, setDotType,
   cornerSquareType, setCornerSquareType,
   cornerDotType, setCornerDotType,
@@ -72,7 +75,7 @@ export const Controls: React.FC<ControlsProps> = ({
       <DataInput setQRData={setUrl} />
 
       {/* 2. Visual Design Card */}
-      <div className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
+      <div data-tour="visual-style" className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 transition-colors duration-300">
         <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white">
           <div className="p-2 bg-purple-100 dark:bg-slate-800 rounded-lg text-purple-600 dark:text-purple-400">
             <RefreshCw className="w-5 h-5" />
@@ -260,6 +263,29 @@ export const Controls: React.FC<ControlsProps> = ({
             </div>
           )}
         </div>
+
+        {/* Logo Size Slider */}
+        {logo && (
+          <div className="mt-6 space-y-3">
+            <div className="flex justify-between items-center">
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Logo Size</label>
+              <span className="text-xs font-mono text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-2 py-0.5 rounded">{Math.round(logoSize * 100)}%</span>
+            </div>
+            <input
+              type="range"
+              min="0.15"
+              max="0.5"
+              step="0.01"
+              value={logoSize}
+              onChange={(e) => setLogoSize(parseFloat(e.target.value))}
+              className="w-full accent-emerald-500 cursor-pointer"
+            />
+            <div className="flex justify-between text-[10px] text-slate-400">
+              <span>Small</span>
+              <span>Large</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 4. History Card */}

@@ -4,6 +4,7 @@ import { Footer } from './components/layout/Footer';
 import { Controls } from './components/qr/Controls';
 import { PreviewCard } from './components/qr/PreviewCard';
 import { BatchPanel } from './components/qr/BatchPanel';
+import { OnboardingTour } from './components/ui/OnboardingTour';
 import { useQRSystem } from './hooks/useQRSystem';
 import { useHistory } from './hooks/useHistory';
 import { useBatchGenerate } from './hooks/useBatchGenerate';
@@ -18,10 +19,12 @@ export default function App() {
     bgColor, setBgColor, 
     bgTransparent, setBgTransparent,
     logo, setLogo, 
+    logoSize, setLogoSize,
     dotType, setDotType, 
     cornerSquareType, setCornerSquareType,
     cornerDotType, setCornerDotType,
     exportSize, setExportSize,
+    setStyle,
     undo, redo, canUndo, canRedo,
     isLibLoaded, 
     qrRef, 
@@ -40,12 +43,15 @@ export default function App() {
   };
 
   const onApplyPreset = (preset: QRPreset) => {
-    setColor(preset.color);
-    setBgColor(preset.bgColor);
-    setDotType(preset.dotType);
-    setCornerSquareType(preset.cornerSquareType);
-    setCornerDotType(preset.cornerDotType);
-    setBgTransparent(false);
+    setStyle({
+      color: preset.color,
+      bgColor: preset.bgColor,
+      bgTransparent: false,
+      dotType: preset.dotType,
+      cornerSquareType: preset.cornerSquareType,
+      cornerDotType: preset.cornerDotType,
+      exportSize,
+    });
     toast(`Applied "${preset.name}" preset`);
   };
 
@@ -96,6 +102,7 @@ export default function App() {
             bgColor={bgColor} setBgColor={setBgColor}
             bgTransparent={bgTransparent} setBgTransparent={setBgTransparent}
             logo={logo} setLogo={setLogo}
+            logoSize={logoSize} setLogoSize={setLogoSize}
             dotType={dotType} setDotType={setDotType}
             cornerSquareType={cornerSquareType} setCornerSquareType={setCornerSquareType}
             cornerDotType={cornerDotType} setCornerDotType={setCornerDotType}
@@ -139,6 +146,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <OnboardingTour />
     </div>
   );
 }

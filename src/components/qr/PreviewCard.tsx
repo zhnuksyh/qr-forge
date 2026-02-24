@@ -33,7 +33,7 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
       <div className="lg:sticky lg:top-28 space-y-6">
         
         {/* [Preview Card] - kept LIGHT/WHITE as requested for contrast */}
-        <div className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-3xl lg:rounded-[2rem] shadow-2xl shadow-black/5 dark:shadow-black/50 border border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
+        <div data-tour="live-preview" className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-3xl lg:rounded-[2rem] shadow-2xl shadow-black/5 dark:shadow-black/50 border border-slate-200 dark:border-slate-800 relative overflow-hidden transition-colors duration-300">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500"></div>
           
           <h3 className="text-center text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-8">Live Preview</h3>
@@ -64,7 +64,7 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
         </div>
 
         {/* Undo/Redo Buttons */}
-        <div className="flex justify-center gap-2">
+        <div data-tour="undo-redo" className="flex justify-center gap-2">
           <button
             onClick={undo}
             disabled={!canUndo}
@@ -84,7 +84,7 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-4">
+        <div data-tour="action-buttons" className="grid grid-cols-2 gap-4">
           <div className="flex gap-2">
             <button 
               onClick={saveToHistory}
