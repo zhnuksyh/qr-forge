@@ -1,21 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '../types';
 import { decodeConfig } from './useShareableConfig';
+import { useUndoRedo, StyleState } from './useUndoRedo';
 
 export const useQRSystem = () => {
     // Read URL hash for shared config on mount
     const initialConfig = decodeConfig();
 
-    // Core QR Content State
+    const initialStyle: StyleState = {
+        color: initialConfig.color || '#2563eb',
+        bgColor: initialConfig.bgColor || '#ffffff',
+        bgTransparent: initialConfig.bgTransparent || false,
+        dotType: initialConfig.dotType || 'rounded',
+        cornerSquareType: initialConfig.cornerSquareType || 'extra-rounded',
+        cornerDotType: initialConfig.cornerDotType || 'dot',
+        exportSize: initialConfig.exportSize || 2000
+    };
+
+    // Undo/Redo state management
+    const { state: style, set: setStyle, undo, redo, canUndo, canRedo } = useUndoRedo(initialStyle);
+
+    // Non-style state (not tracked by undo/redo)
     const [url, setUrl] = useState('https://example.com');
-    const [color, setColor] = useState(initialConfig.color || '#2563eb');
-    const [bgColor, setBgColor] = useState(initialConfig.bgColor || '#ffffff');
-    const [bgTransparent, setBgTransparent] = useState(initialConfig.bgTransparent || false);
     const [logo, setLogo] = useState<string | null>(null);
-    const [dotType, setDotType] = useState<string>(initialConfig.dotType || 'rounded');
-    const [cornerSquareType, setCornerSquareType] = useState<string>(initialConfig.cornerSquareType || 'extra-rounded');
-    const [cornerDotType, setCornerDotType] = useState<string>(initialConfig.cornerDotType || 'dot');
-    const [exportSize, setExportSize] = useState<number>(initialConfig.exportSize || 2000);
+
+    // Convenience setters that update the style object
+    const setColor = useCallback((v: string) => setStyle({ ...style, color: v }), [style, setStyle]);
+    const setBgColor = useCallback((v: string) => setStyle({ ...style, bgColor: v }), [style, setStyle]);
+    const setBgTransparent = useCallback((v: boolean) => setStyle({ ...style, bgTransparent: v }), [style, setStyle]);
+    const setDotType = useCallback((v: string) => setStyle({ ...style, dotType: v }), [style, setStyle]);
+    const setCornerSquareType = useCallback((v: string) => setStyle({ ...style, cornerSquareType: v }), [style, setStyle]);
+    const setCornerDotType = useCallback((v: string) => setStyle({ ...style, cornerDotType: v }), [style, setStyle]);
+    const setExportSize = useCallback((v: number) => setStyle({ ...style, exportSize: v }), [style, setStyle]);
 
     // System State (Library Loading Status)
     const [isLibLoaded, setIsLibLoaded] = useState(false);
@@ -49,16 +65,16 @@ export const useQRSystem = () => {
         }
 
         const options = {
-            width: 300, // Reduced size for preview to prevent layout overflow
+            width: 300,
             height: 300,
             type: 'svg',
             data: url,
             image: '',
-            dotsOptions: { color: color, type: dotType },
-            backgroundOptions: { color: bgTransparent ? 'transparent' : bgColor },
+            dotsOptions: { color: style.color, type: style.dotType },
+            backgroundOptions: { color: style.bgTransparent ? 'transparent' : style.bgColor },
             imageOptions: { crossOrigin: 'anonymous', margin: 5 },
-            cornersSquareOptions: { type: cornerSquareType },
-            cornersDotOptions: { type: cornerDotType },
+            cornersSquareOptions: { type: style.cornerSquareType },
+            cornersDotOptions: { type: style.cornerDotType },
             qrOptions: { errorCorrectionLevel: 'Q' }
         };
 
@@ -88,7 +104,7 @@ export const useQRSystem = () => {
             });
             setTimeout(fixCornerClips, 0);
         }
-    }, [isLibLoaded, url, color, bgColor, bgTransparent, logo, dotType, cornerSquareType, cornerDotType]);
+    }, [isLibLoaded, url, style, logo]);
 
     // Handlers
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,8 +122,8 @@ export const useQRSystem = () => {
         if (qrCode.current && url.trim()) {
             // 1. Re-configure for High-Res Export
             await qrCode.current.update({
-                width: exportSize,
-                height: exportSize,
+                width: style.exportSize,
+                height: style.exportSize,
                 imageOptions: { crossOrigin: 'anonymous', margin: 20 }
             });
 
@@ -144,14 +160,15 @@ export const useQRSystem = () => {
 
     return {
         url, setUrl,
-        color, setColor,
-        bgColor, setBgColor,
-        bgTransparent, setBgTransparent,
+        color: style.color, setColor,
+        bgColor: style.bgColor, setBgColor,
+        bgTransparent: style.bgTransparent, setBgTransparent,
         logo, setLogo,
-        dotType, setDotType,
-        cornerSquareType, setCornerSquareType,
-        cornerDotType, setCornerDotType,
-        exportSize, setExportSize,
+        dotType: style.dotType, setDotType,
+        cornerSquareType: style.cornerSquareType, setCornerSquareType,
+        cornerDotType: style.cornerDotType, setCornerDotType,
+        exportSize: style.exportSize, setExportSize,
+        undo, redo, canUndo, canRedo,
         isLibLoaded,
         qrRef: ref,
         handleLogoUpload,

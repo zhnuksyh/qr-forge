@@ -22,6 +22,7 @@ export default function App() {
     cornerSquareType, setCornerSquareType,
     cornerDotType, setCornerDotType,
     exportSize, setExportSize,
+    undo, redo, canUndo, canRedo,
     isLibLoaded, 
     qrRef, 
     handleLogoUpload, 
@@ -112,6 +113,10 @@ export default function App() {
             handleDownload={onDownload}
             handleCopySvg={onCopySvg}
             handleShareConfig={onShareConfig}
+            undo={undo}
+            redo={redo}
+            canUndo={canUndo}
+            canRedo={canRedo}
             bgTransparent={bgTransparent}
           />
         </div>

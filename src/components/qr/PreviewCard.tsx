@@ -1,5 +1,5 @@
 import React from 'react';
-import { Save, Download, RefreshCw, Link2 } from 'lucide-react';
+import { Save, Download, RefreshCw, Link2, Undo2, Redo2 } from 'lucide-react';
 
 interface PreviewCardProps {
   isLibLoaded: boolean;
@@ -8,6 +8,10 @@ interface PreviewCardProps {
   handleDownload: (ext: 'png' | 'svg' | 'jpeg') => void;
   handleCopySvg: () => void;
   handleShareConfig: () => void;
+  undo: () => void;
+  redo: () => void;
+  canUndo: boolean;
+  canRedo: boolean;
   bgTransparent?: boolean;
 }
 
@@ -18,6 +22,10 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
   handleDownload,
   handleCopySvg,
   handleShareConfig,
+  undo,
+  redo,
+  canUndo,
+  canRedo,
   bgTransparent
 }) => {
   return (
@@ -53,6 +61,26 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Undo/Redo Buttons */}
+        <div className="flex justify-center gap-2">
+          <button
+            onClick={undo}
+            disabled={!canUndo}
+            title="Undo (style change)"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all border disabled:opacity-30 disabled:cursor-not-allowed bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <Undo2 className="w-3.5 h-3.5" /> Undo
+          </button>
+          <button
+            onClick={redo}
+            disabled={!canRedo}
+            title="Redo (style change)"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all border disabled:opacity-30 disabled:cursor-not-allowed bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <Redo2 className="w-3.5 h-3.5" /> Redo
+          </button>
         </div>
 
         {/* Action Buttons */}
