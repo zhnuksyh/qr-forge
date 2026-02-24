@@ -27,7 +27,7 @@ export const Header = () => {
           </button>
           
           <a 
-            href="https://github.com/zhnuksyh/qr-forge" 
+            href="https://github.com/zhnuksyh/qrypt"
             target="_blank" 
             rel="noopener noreferrer" 
             className="hidden md:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-all uppercase tracking-wider bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-800 px-4 py-2 rounded-full border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 group focus:outline-none focus:ring-2 focus:ring-emerald-500"

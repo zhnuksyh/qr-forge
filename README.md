@@ -1,12 +1,12 @@
 # Qrypt 🛡️
 
-![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2Fzhnuksyh%2Fqr-forge.json%3Fcolor%3Dblue&label=visitors&style=flat-square)
+![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2Fzhnuksyh%2Fqrypt.json%3Fcolor%3Dblue&label=visitors&style=flat-square)
 
 **"I was tired of every online QR generator verifying my credit card just to download a PNG. So I built my own."**
 
 Qrypt is a professional-grade, **Client-Side Only** QR Code generator. It runs entirely in your browser, meaning your data never leaves your device, and it will **never** ask you for a subscription.
 
-[**🔗 Live Demo**](https://zhnuksyh.github.io/qr-forge/)
+[**🔗 Live Demo**](https://zhnuksyh.github.io/qrypt/)
 
 ## 🚀 Why this exists?
 Most "Free" QR generators are:
@@ -41,8 +41,8 @@ It generates standard, static QR codes directly on your computer. The pixel patt
 
 1.  **Clone the repo**
     ```bash
-    git clone https://github.com/zhnuksyh/qr-forge.git
-    cd qr-forge
+    git clone https://github.com/zhnuksyh/qrypt.git
+    cd qrypt
     ```
 
 2.  **Install & Start**

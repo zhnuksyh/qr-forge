@@ -16,8 +16,8 @@ export default defineConfig({
                 theme_color: '#020617',
                 background_color: '#020617',
                 display: 'standalone',
-                start_url: '/qr-forge/',
-                scope: '/qr-forge/',
+                start_url: '/qrypt/',
+                scope: '/qrypt/',
                 icons: [
                     {
                         src: 'icon-192.svg',
@@ -29,6 +29,6 @@ export default defineConfig({
             }
         })
     ],
-    base: '/qr-forge/',
+    base: '/qrypt/',
 })
 
