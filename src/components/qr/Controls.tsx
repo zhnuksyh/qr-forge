@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { RefreshCw, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
 import { DataInput } from './DataInput';
+import { PresetsBar } from './PresetsBar';
+import type { QRPreset } from '../../data/presets';
 
 interface ControlsProps {
   setUrl: (url: string) => void;
@@ -21,6 +23,7 @@ interface ControlsProps {
   exportSize: number;
   setExportSize: (size: number) => void;
   handleLogoUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onApplyPreset: (preset: QRPreset) => void;
   history: string[];
   clearHistory: () => void;
 }
@@ -36,6 +39,7 @@ export const Controls: React.FC<ControlsProps> = ({
   cornerDotType, setCornerDotType,
   exportSize, setExportSize,
   handleLogoUpload,
+  onApplyPreset,
   history,
   clearHistory
 }) => {
@@ -77,6 +81,11 @@ export const Controls: React.FC<ControlsProps> = ({
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Quick Presets */}
+          <div className="md:col-span-2">
+            <PresetsBar onApply={onApplyPreset} currentColor={color} />
+          </div>
+
           {/* Dot Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Primary Color</label>

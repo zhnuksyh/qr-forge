@@ -7,6 +7,7 @@ import { useQRSystem } from './hooks/useQRSystem';
 import { useHistory } from './hooks/useHistory';
 import { useToast } from './components/ui/Toast';
 import { encodeConfig } from './hooks/useShareableConfig';
+import type { QRPreset } from './data/presets';
 
 export default function App() {
   const { 
@@ -32,6 +33,16 @@ export default function App() {
   const onSave = () => {
     saveToHistory(url);
     toast('QR code saved to history');
+  };
+
+  const onApplyPreset = (preset: QRPreset) => {
+    setColor(preset.color);
+    setBgColor(preset.bgColor);
+    setDotType(preset.dotType);
+    setCornerSquareType(preset.cornerSquareType);
+    setCornerDotType(preset.cornerDotType);
+    setBgTransparent(false);
+    toast(`Applied "${preset.name}" preset`);
   };
 
   const onDownload = async (ext: 'png' | 'svg' | 'jpeg') => {
@@ -86,6 +97,7 @@ export default function App() {
             cornerDotType={cornerDotType} setCornerDotType={setCornerDotType}
             exportSize={exportSize} setExportSize={setExportSize}
             handleLogoUpload={handleLogoUpload}
+            onApplyPreset={onApplyPreset}
             history={history}
             clearHistory={clearHistory}
           />
