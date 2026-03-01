@@ -18,10 +18,10 @@ export const PresetsBar: React.FC<PresetsBarProps> = ({ onApply, currentColor })
                             key={preset.name}
                             onClick={() => onApply(preset)}
                             title={preset.name}
-                            className={`flex-shrink-0 flex flex-col items-center gap-1.5 px-2.5 py-2 rounded-xl border transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                            className={`flex-shrink-0 flex flex-col items-center gap-1.5 px-2.5 py-2 w-16 rounded-xl transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 ${
                                 isActive 
-                                    ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-md ring-1 ring-purple-500/30' 
-                                    : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-600 hover:shadow-md'
+                                    ? 'ring-2 ring-inset ring-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-md' 
+                                    : 'ring-1 ring-inset ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-800 hover:ring-slate-300 dark:hover:ring-slate-600 hover:shadow-md'
                             }`}
                         >
                             {/* Aesthetic Color Swatch */}

@@ -118,14 +118,16 @@ export const PreviewCard: React.FC<PreviewCardProps> = ({
             </button>
             
             {/* Dropdown Menu */}
-            <div className="absolute bottom-full right-0 w-full mb-2 hidden group-hover/download:flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-2 z-20">
-              <div className="p-2 space-y-1">
-                <button onClick={() => handleDownload('png')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:text-slate-900 dark:focus:text-white focus:outline-none transition-colors flex justify-between items-center">
-                  PNG <span className="text-[10px] bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded text-slate-600 dark:text-slate-500">RASTER</span>
-                </button>
-                <button onClick={() => handleDownload('svg')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:text-slate-900 dark:focus:text-white focus:outline-none transition-colors flex justify-between items-center">
-                  SVG <span className="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded">VECTOR</span>
-                </button>
+            <div className="absolute bottom-full right-0 w-full pb-2 hidden group-hover/download:flex flex-col z-20">
+              <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 overflow-hidden animate-in fade-in slide-in-from-bottom-2">
+                <div className="p-2 space-y-1">
+                  <button onClick={() => handleDownload('png')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:text-slate-900 dark:focus:text-white focus:outline-none transition-colors flex justify-between items-center">
+                    PNG <span className="text-[10px] bg-slate-100 dark:bg-slate-900 px-2 py-0.5 rounded text-slate-600 dark:text-slate-500">RASTER</span>
+                  </button>
+                  <button onClick={() => handleDownload('svg')} className="w-full px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 focus:bg-slate-100 dark:focus:bg-slate-700 rounded-lg text-left text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white focus:text-slate-900 dark:focus:text-white focus:outline-none transition-colors flex justify-between items-center">
+                    SVG <span className="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded">VECTOR</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

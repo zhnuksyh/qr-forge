@@ -3,14 +3,13 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { Controls } from './components/qr/Controls';
 import { PreviewCard } from './components/qr/PreviewCard';
-import { BatchPanel } from './components/qr/BatchPanel';
-import { OnboardingTour } from './components/ui/OnboardingTour';
 import { useQRSystem } from './hooks/useQRSystem';
 import { useHistory } from './hooks/useHistory';
-import { useBatchGenerate } from './hooks/useBatchGenerate';
 import { useToast } from './components/ui/Toast';
 import { encodeConfig } from './hooks/useShareableConfig';
 import type { QRPreset } from './data/presets';
+
+import { OnboardingTour } from './components/ui/OnboardingTour';
 
 export default function App() {
   const { 
@@ -37,7 +36,6 @@ export default function App() {
   } = useQRSystem();
 
   const { history, saveToHistory, clearHistory } = useHistory();
-  const { generateBatch, isGenerating, progress, total } = useBatchGenerate();
   const { toast } = useToast();
 
   const onSave = () => {
@@ -92,7 +90,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen selection:bg-blue-500 selection:text-white flex flex-col">
+    <div className="min-h-screen selection:bg-blue-500 selection:text-white flex flex-col font-sans bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       {/* [Style Injection] Loading Poppins Font */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -124,7 +122,6 @@ export default function App() {
             history={history}
             clearHistory={clearHistory}
           />
-          
           <PreviewCard 
             isLibLoaded={isLibLoaded}
             qrRef={qrRef}
@@ -137,23 +134,6 @@ export default function App() {
             canUndo={canUndo}
             canRedo={canRedo}
             bgTransparent={bgTransparent}
-          />
-        </div>
-
-        {/* Batch Generation Panel */}
-        <div className="mt-8">
-          <BatchPanel
-            isGenerating={isGenerating}
-            progress={progress}
-            total={total}
-            onGenerate={(urls) => {
-              generateBatch(urls, {
-                color, bgColor, bgTransparent, dotType,
-                cornerSquareType, cornerDotType, exportSize,
-                logoBgColor, logoBgTransparent, logoMargin
-              });
-              toast(`Generating ${urls.length} QR codes...`);
-            }}
           />
         </div>
       </main>
