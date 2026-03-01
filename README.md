@@ -1,4 +1,4 @@
-# Qrypt 🛡️
+# Qrypt 
 
 ![Hits](https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2Fzhnuksyh%2Fqrypt.json%3Fcolor%3Dblue&label=visitors&style=flat-square)
 
@@ -21,13 +21,13 @@ It generates standard, static QR codes directly on your computer. The pixel patt
 -   **100% Client-Side**: No server, no database, no tracking.
 -   **Multi-Type Data**: Generate QR codes for URLs, Wi-Fi, vCards, Email, SMS, and plain text.
 -   **Vector Quality**: Export crystal-clear SVGs or high-res PNGs (up to 4096px).
--   **Fully Customizable**: Colors, dot styles, corner styles, error correction levels.
--   **Style Presets**: One-click themes — Classic, Ocean, Neon, Minimal, Corporate, Sunset, Berry.
+-   **Fully Customizable**: Advanced color pickers, error correction levels, and granular dot/corner styling.
+-   **Style Presets**: One-click aesthetic themes — Classic, Ocean, Neon, Minimal, Corporate, Sunset, Berry.
 -   **Shareable Config Links**: Share your exact style config via URL hash.
--   **Batch Generation**: Paste multiple URLs and download all QR codes as a ZIP.
--   **Undo/Redo**: Step through your style customization history.
--   **Logo Support**: Embed your brand logo seamlessly.
--   **PWA Ready**: Install it and use it fully offline.
+-   **Undo/Redo & History**: Step through your customization history or load recent styles.
+-   **Advanced Logo Support**: Use built-in icons or drag-and-drop custom logos with transparency and padding controls.
+-   **Sleek Premium UI**: Animated toast notifications, seamless Dark/Light modes, and unified Poppins typography.
+-   **PWA Ready**: Install it to your home screen and use it fully offline.
 -   **Guided Onboarding**: First-visit tooltip tour to get started fast.
 -   **Privacy Focused**: Secure by design.
 
