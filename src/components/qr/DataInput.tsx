@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link as LinkIcon, Wifi, User, Mail, MessageSquare, Type } from 'lucide-react';
+import { Link as LinkIcon, Wifi, User, Mail, MessageSquare, Type, ClipboardPaste } from 'lucide-react';
+import { CustomSelect } from '../ui/CustomSelect';
 
 type DataType = 'url' | 'text' | 'wifi' | 'email' | 'sms' | 'vcard';
 
@@ -79,9 +80,11 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
   }, [dataType, url, text, ssid, wifiPass, encryption, hidden, emailTo, emailSubject, emailBody, smsPhone, smsMessage, vcName, vcPhone, vcEmail, vcOrg]);
 
   return (
-    <div data-tour="data-input" className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 relative overflow-hidden group transition-colors duration-300">
+    <div data-tour="data-input" className="bg-white dark:bg-slate-900 p-6 lg:p-8 rounded-2xl lg:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl shadow-black/5 dark:shadow-black/20 relative group transition-colors duration-300">
       {/* Decorative gradient glow */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
+      <div className="absolute inset-0 overflow-hidden rounded-2xl lg:rounded-3xl pointer-events-none">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
+      </div>
       
       <h2 className="flex items-center gap-3 text-lg font-semibold mb-6 text-slate-800 dark:text-white relative z-10">
         <div className="p-2 bg-blue-50 dark:bg-slate-800 rounded-lg text-blue-600 dark:text-blue-400">
@@ -116,10 +119,26 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
         {dataType === 'url' && (
           <div className="space-y-3">
             <label className={labelClass}>Target URL</label>
-            <input 
-              type="text" value={url} onChange={(e) => setUrl(e.target.value)}
-              className={inputClass} placeholder="https://yourwebsite.com"
-            />
+            <div className="relative flex items-center">
+              <input 
+                type="text" value={url} onChange={(e) => setUrl(e.target.value)}
+                className={inputClass + " pr-28"} placeholder="https://yourwebsite.com"
+              />
+              <button 
+                onClick={async () => {
+                  try {
+                    const text = await navigator.clipboard.readText();
+                    if (text) setUrl(text);
+                  } catch (err) {
+                    console.error('Failed to read clipboard contents: ', err);
+                  }
+                }}
+                className="absolute right-3 z-10 p-2 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+                title="Paste from clipboard"
+              >
+                <ClipboardPaste className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
 
@@ -146,12 +165,15 @@ export const DataInput: React.FC<DataInputProps> = ({ setQRData }) => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-3">
                 <label className={labelClass}>Encryption</label>
-                <select value={encryption} onChange={(e) => setEncryption(e.target.value)}
-                  className={inputClass + " appearance-none cursor-pointer"}>
-                  <option value="WPA">WPA/WPA2</option>
-                  <option value="WEP">WEP</option>
-                  <option value="nopass">None</option>
-                </select>
+                <CustomSelect
+                  value={encryption}
+                  onChange={(val) => setEncryption(val)}
+                  options={[
+                    { value: 'WPA', label: 'WPA/WPA2' },
+                    { value: 'WEP', label: 'WEP' },
+                    { value: 'nopass', label: 'None' }
+                  ]}
+                />
               </div>
               <div className="space-y-3">
                 <label className={labelClass}>Hidden Network</label>
