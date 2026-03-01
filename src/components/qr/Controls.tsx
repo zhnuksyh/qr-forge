@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { RefreshCw, Image as ImageIcon, Upload, Trash2 } from 'lucide-react';
 import { DataInput } from './DataInput';
 import { PresetsBar } from './PresetsBar';
+import { CustomSelect } from '../ui/CustomSelect';
+import { ColorPicker } from '../ui/ColorPicker';
 import type { QRPreset } from '../../data/presets';
 import { PREDEFINED_ICONS } from '../../data/icons';
 
@@ -103,41 +105,30 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Dot Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Primary Color</label>
-            <div className="flex items-center gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-purple-500 transition-shadow">
-              <input 
-                type="color" 
-                value={color} 
-                onChange={(e) => setColor(e.target.value)}
-                className="h-10 w-12 cursor-pointer rounded-lg border-0 p-0 bg-transparent"
-              />
-              <span className="text-sm text-slate-700 dark:text-slate-300 font-mono flex-grow">{color}</span>
+            <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-200 dark:border-slate-800 transition-all hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-sm">
+              <ColorPicker color={color} onChange={setColor} />
             </div>
           </div>
 
           {/* Background Color Picker */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Background</label>
-            <div className="flex items-center justify-between gap-4 bg-slate-100 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 focus-within:ring-2 focus-within:ring-purple-500 transition-shadow">
-              <div className="flex items-center gap-4">
-                <input 
-                  type="color" 
-                  value={bgColor} 
-                  onChange={(e) => setBgColor(e.target.value)}
-                  disabled={bgTransparent}
-                  className={`w-10 h-10 rounded-lg cursor-pointer border-0 bg-transparent ${bgTransparent ? 'opacity-50 cursor-not-allowed' : ''}`}
-                />
-                <span className={`text-sm font-medium uppercase font-mono ${bgTransparent ? 'text-slate-400 opacity-50' : 'text-slate-700 dark:text-slate-300'}`}>
-                  {bgColor}
-                </span>
+            <div className="flex items-center justify-between gap-4 bg-slate-50 dark:bg-slate-950 p-2 pr-4 rounded-xl border border-slate-200 dark:border-slate-800 transition-all hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-sm">
+              <div className="flex items-center gap-4 relative">
+                <ColorPicker color={bgColor} onChange={setBgColor} disabled={bgTransparent} />
+                {bgTransparent && <div className="absolute left-0 top-0 w-10 h-10 rounded-lg bg-checkerboard opacity-50 pointer-events-none border border-black/10 dark:border-white/10" />}
               </div>
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input 
-                  type="checkbox"
-                  checked={bgTransparent}
-                  onChange={(e) => setBgTransparent(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-purple-600 focus:ring-purple-500 bg-white dark:bg-slate-900 cursor-pointer transition-colors"
-                />
-                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+              <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer group">
+                <div className="relative flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={bgTransparent}
+                    onChange={(e) => setBgTransparent(e.target.checked)}
+                    className="peer sr-only"
+                  />
+                  <div className="w-9 h-5 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-purple-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-purple-500"></div>
+                </div>
+                <span className="text-xs font-semibold group-hover:text-slate-800 dark:group-hover:text-slate-300 transition-colors">
                   Transparent
                 </span>
               </label>
@@ -147,60 +138,45 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Dot Shape Selector */}
           <div className="md:col-span-2 space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Pattern Style</label>
-            <div className="relative">
-              <select 
-                value={dotType}
-                onChange={(e) => setDotType(e.target.value)}
-                className="w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
-              >
-                <option value="square">Classic Square</option>
-                <option value="dots">Modern Dots</option>
-                <option value="rounded">Soft Rounded</option>
-                <option value="classy">Classy Edge</option>
-                <option value="classy-rounded">Classy Rounded</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </div>
-            </div>
+            <CustomSelect
+              value={dotType}
+              onChange={(val) => setDotType(val)}
+              options={[
+                { value: 'square', label: 'Classic Square' },
+                { value: 'dots', label: 'Modern Dots' },
+                { value: 'rounded', label: 'Soft Rounded' },
+                { value: 'classy', label: 'Classy Edge' },
+                { value: 'classy-rounded', label: 'Classy Rounded' }
+              ]}
+            />
           </div>
 
 
           {/* Corner Square Style */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Corner Squares</label>
-            <div className="relative">
-              <select 
-                value={cornerSquareType}
-                onChange={(e) => setCornerSquareType(e.target.value)}
-                className="w-full p-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
-              >
-                <option value="square">Square</option>
-                <option value="dot">Dot</option>
-                <option value="extra-rounded">Extra Rounded</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </div>
-            </div>
+            <CustomSelect
+              value={cornerSquareType}
+              onChange={(val) => setCornerSquareType(val)}
+              options={[
+                { value: 'square', label: 'Square' },
+                { value: 'dot', label: 'Dot' },
+                { value: 'extra-rounded', label: 'Extra Rounded' }
+              ]}
+            />
           </div>
 
           {/* Corner Dot Style */}
           <div className="space-y-3">
             <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Corner Dots</label>
-            <div className="relative">
-              <select 
-                value={cornerDotType}
-                onChange={(e) => setCornerDotType(e.target.value)}
-                className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:ring-2 focus:ring-purple-500 appearance-none cursor-pointer hover:bg-slate-900 transition-colors"
-              >
-                <option value="square">Square</option>
-                <option value="dot">Dot</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </div>
-            </div>
+            <CustomSelect
+              value={cornerDotType}
+              onChange={(val) => setCornerDotType(val)}
+              options={[
+                { value: 'square', label: 'Square' },
+                { value: 'dot', label: 'Dot' }
+              ]}
+            />
           </div>
 
           {/* Export Resolution Slider */}
@@ -244,10 +220,10 @@ export const Controls: React.FC<ControlsProps> = ({
                 key={icon.id}
                 onClick={() => handleSelectIcon(icon.id)}
                 title={icon.name}
-                className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-colors shrink-0 group focus:outline-none focus:ring-2 focus:ring-emerald-500
+                className={`flex flex-col items-center justify-center gap-2 p-3 w-16 rounded-xl transition-all shrink-0 group focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900
                   ${activeIconId === icon.id 
-                    ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10' 
-                    : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10'}
+                    ? 'ring-2 ring-inset ring-emerald-500 bg-emerald-50 dark:bg-emerald-500/10' 
+                    : 'ring-1 ring-inset ring-slate-200 dark:ring-slate-700 bg-white dark:bg-slate-800 hover:ring-emerald-400 dark:hover:ring-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-500/10'}
                 `}
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
@@ -289,7 +265,7 @@ export const Controls: React.FC<ControlsProps> = ({
           {/* Logo Preview Area */}
           {logo && (
             <div className="relative group shrink-0">
-              <div className="w-32 h-32 border border-slate-200 dark:border-slate-700 rounded-2xl bg-[url('https://bg-patterns.netlify.app/bg-patterns/subtle-dots.png')] flex items-center justify-center p-2 bg-white dark:bg-transparent">
+              <div className="w-32 h-32 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center p-2 shadow-inner pointer-events-none">
                 <img src={logo} alt="Logo preview" className="max-w-full max-h-full object-contain" />
               </div>
               <button 
@@ -306,7 +282,7 @@ export const Controls: React.FC<ControlsProps> = ({
         {/* Logo Configuration & Sizing */}
         {(rawLogo || activeIconId) && (
           <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-6">
-            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Logo Styling</h3>
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Logo Styling</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Logo Background Controls */}
@@ -314,19 +290,13 @@ export const Controls: React.FC<ControlsProps> = ({
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Background Color</label>
-                    <span className="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">{logoBgColor}</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-700 hover:scale-105 transition-transform flex-shrink-0 cursor-pointer">
-                      <input 
-                        type="color" 
-                        value={logoBgColor}
-                        onChange={(e) => setLogoBgColor(e.target.value)}
-                        disabled={logoBgTransparent}
-                        className="absolute -top-2 -left-2 w-16 h-16 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                      />
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <ColorPicker color={logoBgColor} onChange={setLogoBgColor} disabled={logoBgTransparent} />
+                      {logoBgTransparent && <div className="absolute left-0 top-0 w-10 h-10 rounded-lg bg-checkerboard opacity-50 pointer-events-none border border-black/10 dark:border-white/10" />}
                     </div>
-                    <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer">
+                    <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer group">
                       <div className="relative flex items-center">
                         <input
                           type="checkbox"
@@ -336,7 +306,9 @@ export const Controls: React.FC<ControlsProps> = ({
                         />
                         <div className="w-9 h-5 bg-slate-200 dark:bg-slate-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-emerald-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
                       </div>
-                      Transparent
+                      <span className="text-xs font-semibold group-hover:text-slate-800 dark:group-hover:text-slate-300 transition-colors">
+                        Transparent
+                      </span>
                     </label>
                   </div>
                 </div>
